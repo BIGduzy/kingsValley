@@ -1,68 +1,57 @@
 package com.nick.kingsvalley1;
 
-import com.badlogic.gdx.ApplicationListener;
+import Screens.PlayScreen;
+
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL10;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.Texture.TextureFilter;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
-public class KingsValley1 implements ApplicationListener {
+public class KingsValley1 extends Game {
 	
 	//fields
-	private OrthographicCamera camera;
 	private SpriteBatch batch;
-	private Texture texture;
-	private Sprite sprite;
+	private PlayScreen play;
 	
+ 	public SpriteBatch getBatch() {
+		return batch;
+	}
+	public void setBatch(SpriteBatch batch) {
+		this.batch = batch;
+	}
+
 	@Override
-	public void create() {		
-		float w = Gdx.graphics.getWidth();
-		float h = Gdx.graphics.getHeight();
-		
-		camera = new OrthographicCamera(1, h/w);
-		batch = new SpriteBatch();
-		
-		texture = new Texture(Gdx.files.internal("data/explorer.png"));
-		texture.setFilter(TextureFilter.Linear, TextureFilter.Linear);
-		
-		TextureRegion region = new TextureRegion(texture, 0, 0, 512, 275);
-		
-		sprite = new Sprite(region);
-		sprite.setSize(0.9f, 0.9f * sprite.getHeight() / sprite.getWidth());
-		sprite.setOrigin(sprite.getWidth()/2, sprite.getHeight()/2);
-		sprite.setPosition(-sprite.getWidth()/2, -sprite.getHeight()/2);
+	public void create() {	
+		this.play = new PlayScreen(this);
+		this.batch = new SpriteBatch();
+		this.setBatch(this.batch);
+		this.setScreen(this.play);
 	}
 
 	@Override
 	public void dispose() {
-		batch.dispose();
-		texture.dispose();
+		super.dispose();
 	}
 
 	@Override
-	public void render() {		
+	public void render() {	
 		Gdx.gl.glClearColor(0.06f, 0.06f, 0.06f, 1f);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-		//Gdx.app.log("uit de render","safe me");
-		batch.setProjectionMatrix(camera.combined);
-		batch.begin();
-		sprite.draw(batch);
-		batch.end();
+		super.render();
 	}
 
 	@Override
 	public void resize(int width, int height) {
+		super.resize(width, height);
 	}
 
 	@Override
 	public void pause() {
+		super.pause();
 	}
 
 	@Override
 	public void resume() {
+		super.resume();
 	}
 }
