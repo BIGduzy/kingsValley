@@ -82,6 +82,8 @@ public class PlayScreen implements Screen{
 			camera.position.set(0f, 0f, 0f);
 			camera.update();
 			Gdx.app.log("show", "Ik wordt een keer aangeroepen");
+			Gdx.app.log("schermbreedte", Float.toString(Gdx.graphics.getWidth()));
+			Gdx.app.log("schermgroote", Float.toString(Gdx.graphics.getHeight()));
 			this.player = new Player(this.game, new Vector2(100f,0f), 1f);
 			this.arrow_right = new Image(this.game,
 										 new Vector2(w/2f - 64, -h/2f),

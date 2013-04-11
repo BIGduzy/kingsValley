@@ -1,5 +1,6 @@
 package inputprocessor;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Input.Keys;
 
@@ -49,7 +50,6 @@ public class PlayerInputProcessor implements InputProcessor{
 		return false;
 	}
 
-
 	@Override
 	public boolean keyUp(int keycode) {
 		
@@ -80,15 +80,39 @@ public class PlayerInputProcessor implements InputProcessor{
 
 
 	@Override
-	public boolean touchDown(int screenX, int screenY, int pointer, int button) {
+	public boolean touchDown(int screenX, int screenY, int pointer, int button)
+	{
+		int x_right = 1200;
+		int x_left = 0;
+		int y = 600;
+		if ( screenX > x_right  && screenX < x_right + 100  && screenY > y && screenY < y + 100)
+		{
+			this.screen.getPlayer().setState(this.screen.getPlayer().getWalkRight());
+		}
+		else if (screenX > x_left && screenX < x_left + 100 && screenY > y && screenY < y + 100)
+		{
+			this.screen.getPlayer().setState(this.screen.getPlayer().getWalkLeft());
+		}
 		return false;
 	}
-
 
 	@Override
-	public boolean touchUp(int screenX, int screenY, int pointer, int button) {
+	public boolean touchUp(int screenX, int screenY, int pointer, int button)
+	{
+		int x_right = 1200;
+		int x_left = 0;
+		int y = 600;
+		if ( screenX > x_right  && screenX < x_right + 100  && screenY > y && screenY < y + 100)
+		{
+			this.screen.getPlayer().setState(this.screen.getPlayer().getIdleRight());
+		}
+		else if (screenX > x_left && screenX < x_left + 100 && screenY > y && screenY < y + 100)
+		{
+			this.screen.getPlayer().setState(this.screen.getPlayer().getIdleLeft());
+		}
 		return false;
 	}
+	
 
 
 	@Override
@@ -107,4 +131,6 @@ public class PlayerInputProcessor implements InputProcessor{
 	public boolean scrolled(int amount) {
 		return false;
 	}
+	
+	
 }
