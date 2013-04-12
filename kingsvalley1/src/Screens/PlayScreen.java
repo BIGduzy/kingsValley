@@ -69,8 +69,6 @@ public class PlayScreen implements Screen{
 
 	@Override
 	public void render(float delta) {
-		Gdx.app.log("schermbreedte", Float.toString(Gdx.graphics.getWidth()));
-		Gdx.app.log("schermhoogt", Float.toString(Gdx.graphics.getHeight()));
 		this.player.Update(delta);
 		this.game.getBatch().setProjectionMatrix(camera.combined);
 		this.game.getBatch().begin();
@@ -100,7 +98,8 @@ public class PlayScreen implements Screen{
 		camera.setToOrtho(false, w, h);
 		camera.position.set(0f, 0f, 0f);
 		camera.update();
-		Gdx.app.log("show", "Ik wordt een keer aangeroepen");
+		Gdx.app.log("schermbreedte", Float.toString(Gdx.graphics.getWidth()));
+		Gdx.app.log("schermhoogt", Float.toString(Gdx.graphics.getHeight()));
 		this.arrow_right = new Image(this.game,
 									 new Vector2(w/2f - 64, -h/2f),
 									 "data/arrows/Arrow-Right.png");

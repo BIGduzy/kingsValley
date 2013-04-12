@@ -1,6 +1,6 @@
 package gesturelistener;
 
-import screens.PlayScreen;
+import Screens.PlayScreen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.input.GestureDetector.GestureListener;
@@ -65,7 +65,7 @@ public class PlayerGestureListener implements GestureListener
 			}
 			else if (this.flingVector.angle() >= 30 && this.flingVector.angle() < 60)
 			{
-				this.player.setState(this.player.());
+				//this.player.setState(this.player.());
 			}
 		}
 		else if ( velocityX < 0)
