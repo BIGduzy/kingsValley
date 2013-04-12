@@ -33,11 +33,11 @@ public class PlayerGestureListener implements GestureListener
 	@Override
 	public boolean tap(float x, float y, int count, int button)
 	{
-		if ( this.player.getState().equals(this.player.getRight()))
+		if ( this.player.getState() == (this.player.getRight()))
 		{
 			this.player.setState(this.player.getIdleRight());
 		}
-		else if ( this.player.getState().equals(this.player.getLeft()))
+		else if ( this.player.getState() == (this.player.getLeft()))
 		{
 			this.player.setState(this.player.getIdleLeft());
 		}
@@ -63,9 +63,10 @@ public class PlayerGestureListener implements GestureListener
 			{
 				this.player.setState(this.player.getRight());
 			}
-			else if (this.flingVector.angle() >= 30 && this.flingVector.angle() < 60)
+			else if (this.flingVector.angle() >= 300 && this.flingVector.angle() < 330)
 			{
-				//this.player.setState(this.player.());
+				this.player.getJumpRight().Initialize();
+				this.player.setState(this.player.getJumpRight());
 			}
 		}
 		else if ( velocityX < 0)

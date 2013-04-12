@@ -98,7 +98,7 @@ public class Player  {
 			this.idleRight = new PlayerIdleRight(this);
 			this.idleLeft = new PlayerIdleLeft(this);
 			this.walkLeft = new PlayerLeft(this);
-			this.jumpRight = new PlayerJumpRight(this);
+			this.jumpRight = new PlayerJumpRight(this,20,-32);
 			this.state = this.idleRight;
 		}
 
