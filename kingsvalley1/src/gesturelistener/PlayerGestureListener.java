@@ -7,6 +7,7 @@ import com.badlogic.gdx.input.GestureDetector.GestureListener;
 import com.badlogic.gdx.math.Vector2;
 
 import Player.Player;
+import Player.PlayerIdleJumpRight;
 
 
 public class PlayerGestureListener implements GestureListener
@@ -63,15 +64,34 @@ public class PlayerGestureListener implements GestureListener
 			{
 				this.player.setState(this.player.getRight());
 			}
-			else if (this.flingVector.angle() >= 300 && this.flingVector.angle() < 330)
+			else if (this.flingVector.angle() >= 300 && this.flingVector.angle() < 360)
 			{
 				this.player.getJumpRight().Initialize();
 				this.player.setState(this.player.getJumpRight());
 			}
+			else if (this.flingVector.angle() >= 270 && this.flingVector.angle() < 300)
+			{
+				this.player.getIdleJumpRight().Initialize();
+				this.player.setState(this.player.getIdleJumpRight());
+			}
 		}
 		else if ( velocityX < 0)
 		{
-			this.player.setState(this.player.getLeft());
+			if ( this.flingVector.angle() >= 150 && this.flingVector.angle() < 210)
+				{
+					this.player.setState(this.player.getLeft());
+				}
+			else if (this.flingVector.angle() >= 210 && this.flingVector.angle() < 270)
+			{
+				this.player.getJumpLeft().Initialize();
+				this.player.setState(this.player.getJumpLeft());
+			}
+			else if (this.flingVector.angle() >= 240 && this.flingVector.angle() < 270)
+			{
+				this.player.getIdleJumpLeft().Initialize();
+				this.player.setState(this.player.getIdleJumpLeft());
+				
+			}
 		}
 		return false;
 	}

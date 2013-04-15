@@ -18,6 +18,9 @@ public class Player  {
 		private PlayerIdleLeft idleLeft;
 		private PlayerLeft walkLeft;
 		private PlayerJumpRight jumpRight;
+		private PlayerJumpLeft jumpLeft;
+		private PlayerIdleJumpLeft idleJumpLeft;
+		private PlayerIdleJumpRight idleJumpRight;
 
 
 
@@ -86,7 +89,26 @@ public class Player  {
 		public void setJumpRight(PlayerJumpRight jumpRight) {
 			this.jumpRight = jumpRight;
 		}
-
+		public PlayerJumpLeft getJumpLeft() {
+			return jumpLeft;
+		}
+		public void setJumpLeft(PlayerJumpLeft jumpLeft) {
+			this.jumpLeft = jumpLeft;
+		}
+		public PlayerIdleJumpLeft getIdleJumpLeft() {
+			return idleJumpLeft;
+		}
+		public void setIdleJumpLeft(PlayerIdleJumpLeft idleJumpLeft) {
+			this.idleJumpLeft = idleJumpLeft;
+		}
+		public PlayerIdleJumpRight getIdleJumpRight() {
+			return idleJumpRight;
+		}
+		public void setIdleJumpRight(PlayerIdleJumpRight idleJumpRight) {
+			this.idleJumpRight = idleJumpRight;
+		}
+		
+		
 		//Constructor
 		public Player(KingsValley1 game, Vector2 position, float speed)
 		{
@@ -98,7 +120,10 @@ public class Player  {
 			this.idleRight = new PlayerIdleRight(this);
 			this.idleLeft = new PlayerIdleLeft(this);
 			this.walkLeft = new PlayerLeft(this);
-			this.jumpRight = new PlayerJumpRight(this,20,-32);
+			this.jumpRight = new PlayerJumpRight(this,20,32);
+			this.jumpLeft = new PlayerJumpLeft(this,-20,32);
+			this.idleJumpLeft = new PlayerIdleJumpLeft(this, -20,32);
+			this.idleJumpRight = new PlayerIdleJumpRight(this,20,32);
 			this.state = this.idleRight;
 		}
 
