@@ -25,8 +25,8 @@ public class PlayerJumpRight extends AnimatedSprite
 	{
 		this.startX = player.getPosition().x;
 		this.startY = player.getPosition().y;
-		this.k = (int)this.startY - k;
 		this.h = (int)this.startX + h;
+		this.k = (int)this.startY - k;
 		this.a = (this.startY - this.k)/(float)Math.pow((double)(this.startX - this.h), 2);
 	
 	}
@@ -34,7 +34,6 @@ public class PlayerJumpRight extends AnimatedSprite
 	//Update method
 	public void Update(float delta)
 	{
-		super.Update(delta);
 		float x = this.player.getPosition().x + this.player.getSpeed();
 		float y = this.a * (float)Math.pow((double)(x - this.h), 2) + this.k;
 		

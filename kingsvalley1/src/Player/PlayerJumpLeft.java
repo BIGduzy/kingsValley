@@ -16,6 +16,7 @@ public class PlayerJumpLeft extends AnimatedSprite {
 		public PlayerJumpLeft(Player player, int h, int k)
 		{
 			super(player);
+			this.flipX = true;
 			this.player = player;
 			this.startH = h;
 			this.startK = k;
