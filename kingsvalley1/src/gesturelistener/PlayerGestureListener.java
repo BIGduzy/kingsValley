@@ -1,28 +1,25 @@
 package gesturelistener;
 
-import Screens.PlayScreen;
+import level.Level;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.input.GestureDetector.GestureListener;
 import com.badlogic.gdx.math.Vector2;
 
 import Player.Player;
-import Player.PlayerIdleJumpRight;
 
 
 public class PlayerGestureListener implements GestureListener
 {
 	//Fields
-	private PlayScreen screen;
 	private Player player;
 	private Vector2 flingVector;
 
 
 	//Constructor
-	public PlayerGestureListener(PlayScreen screen)
+	public PlayerGestureListener(Level level)
 	{
-		this.screen = screen;
-		this.player = screen.getPlayer();
+		this.player = level.getPlayer();
 	}
 
 	@Override

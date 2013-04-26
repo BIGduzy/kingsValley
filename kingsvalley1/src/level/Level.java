@@ -1,5 +1,8 @@
 package level;
 
+import gesturelistener.PlayerGestureListener;
+import inputprocessor.PlayerInputProcessor;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -10,13 +13,15 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import Player.Player;
 import bricks.Brick;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.files.FileHandle;
-import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.input.GestureDetector;
 import com.badlogic.gdx.math.Vector2;
 
 import com.nick.kingsvalley1.KingsValley1;
@@ -31,6 +36,18 @@ public class Level
 	private Texture spriteSheet;
 	private Map<String, TextureRegion> region;
 	private Brick bricks[][];
+	private Player player;
+	private PlayerInputProcessor inputProcessor;
+	private PlayerGestureListener gestureListener;
+	private InputMultiplexer multiplexer;
+	
+	public Player getPlayer() {
+		return player;
+	}
+
+	public void setPlayer(Player player) {
+		this.player = player;
+	}
 
 	//Constructor
 	public Level(KingsValley1 game, int levelIndex)
@@ -43,6 +60,24 @@ public class Level
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		//Inputprocessor zorgt voor alle inputdetectie
+		//-----------------------------------------------------
+		this.inputProcessor = new PlayerInputProcessor(this);
+		//-----------------------------------------------------
+
+		//Met een gestureListener kun je andere scherminput afvangen zoals de fling en de pinch
+		//-----------------------------------------------------
+		this.gestureListener = new PlayerGestureListener(this);
+		//----------------------------------------------------
+
+		//Met een multiplexer kun je zowel de inputprocessor als de gesturelistener gebruiken
+		this.multiplexer = new InputMultiplexer();
+		this.multiplexer.addProcessor(this.inputProcessor);
+		this.multiplexer.addProcessor(new GestureDetector(this.gestureListener));
+
+		//Voeg de multiplexer toe aan setInputProcessor
+		Gdx.input.setInputProcessor(this.multiplexer);
 	}
 
 	private void LoadAssets() throws IOException
@@ -103,11 +138,18 @@ public class Level
 				return new Brick(this.game, new Vector2(i,j), this.region.get("fundament"), '2');
 			case '.':
 				return new Brick(this.game, new Vector2(i,j), this.region.get("brick_transparent"), '.');
+			case '+':
+				this.player = new Player(this.game, new Vector2(i,j), 1f);
+				return new Brick(this.game, new Vector2(i,j), this.region.get("brick_transparent"), '.');
 			default:
 				return new Brick(this.game, new Vector2(i,j), this.region.get("brick_transparent"), '.');
 
 		}
-
+	}
+	
+	public void Update(float delta)
+	{
+		this.player.Update(delta);
 	}
 
 	public void Draw(float delta)
@@ -119,5 +161,6 @@ public class Level
 				this.bricks[j][i].Draw(delta);
 			}				
 		}
+		this.player.Draw(delta);
 	}
 }

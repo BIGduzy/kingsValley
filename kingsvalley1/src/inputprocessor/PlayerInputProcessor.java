@@ -1,22 +1,24 @@
 package inputprocessor;
 
+import level.Level;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Input.Keys;
 
 
-import Screens.PlayScreen;
+import Player.Player;
 
 
 public class PlayerInputProcessor implements InputProcessor
 {
 	//Fields
-	private PlayScreen screen;	
+	private Player player;
 
 	//Constructor
-	public PlayerInputProcessor(PlayScreen screen)
+	public PlayerInputProcessor(Level level)
 	{
-		this.screen = screen;
+		this.player = level.getPlayer();
 	}
 
 	@Override
@@ -25,22 +27,22 @@ public class PlayerInputProcessor implements InputProcessor
 		switch(keycode)
 		{
 			case Keys.RIGHT:
-				Gdx.app.log("links", this.screen.getPlayer().getState().toString());
-				Gdx.app.log("rechts", this.screen.getPlayer().getIdleLeft().toString());
-				Gdx.app.log("gelijk", "" + this.screen.getPlayer().getState().equals(this.screen.getPlayer().getIdleLeft()));
-				if (this.screen.getPlayer().getState() == (this.screen.getPlayer().getIdleRight()) ||
-					this.screen.getPlayer().getState() == (this.screen.getPlayer().getIdleLeft()) ||
-					this.screen.getPlayer().getState() == (this.screen.getPlayer().getLeft()))
+				Gdx.app.log("links", this.player.getState().toString());
+				Gdx.app.log("rechts", this.player.getIdleLeft().toString());
+				Gdx.app.log("gelijk", "" + this.player.getState().equals(this.player.getIdleLeft()));
+				if (this.player.getState() == (this.player.getIdleRight()) ||
+					this.player.getState() == (this.player.getIdleLeft()) ||
+					this.player.getState() == (this.player.getLeft()))
 				{
-					this.screen.getPlayer().setState(this.screen.getPlayer().getRight());
+					this.player.setState(this.player.getRight());
 				}
 				break;	
 			case Keys.LEFT:
-				if (this.screen.getPlayer().getState() == (this.screen.getPlayer().getIdleLeft()) ||
-					this.screen.getPlayer().getState() == (this.screen.getPlayer().getIdleRight())||
-					this.screen.getPlayer().getState() == (this.screen.getPlayer().getRight()))
+				if (this.player.getState() == (this.player.getIdleLeft()) ||
+					this.player.getState() == (this.player.getIdleRight())||
+					this.player.getState() == (this.player.getRight()))
 				{
-					this.screen.getPlayer().setState(this.screen.getPlayer().getLeft());
+					this.player.setState(this.player.getLeft());
 				}
 				break;	
 		}	
@@ -53,15 +55,15 @@ public class PlayerInputProcessor implements InputProcessor
 		switch(keycode)
 		{
 			case Keys.RIGHT:
-				if (this.screen.getPlayer().getState().equals(this.screen.getPlayer().getRight()))
+				if (this.player.getState().equals(this.player.getRight()))
 				{
-					this.screen.getPlayer().setState(this.screen.getPlayer().getIdleRight());
+					this.player.setState(this.player.getIdleRight());
 				}
 				break;
 			case Keys.LEFT:
-				if (this.screen.getPlayer().getState().equals(this.screen.getPlayer().getLeft()))
+				if (this.player.getState().equals(this.player.getLeft()))
 				{
-					this.screen.getPlayer().setState(this.screen.getPlayer().getIdleLeft());
+					this.player.setState(this.player.getIdleLeft());
 				}
 				break;
 		}	
@@ -82,11 +84,11 @@ public class PlayerInputProcessor implements InputProcessor
 		int y = 600;
 		if ( screenX > x_right  && screenX < x_right + 100  && screenY > y && screenY < y + 100)
 		{
-			this.screen.getPlayer().setState(this.screen.getPlayer().getRight());
+			this.player.setState(this.player.getRight());
 		}
 		else if (screenX > x_left && screenX < x_left + 100 && screenY > y && screenY < y + 100)
 		{
-			this.screen.getPlayer().setState(this.screen.getPlayer().getLeft());
+			this.player.setState(this.player.getLeft());
 		}
 		return false;
 	}
@@ -99,11 +101,11 @@ public class PlayerInputProcessor implements InputProcessor
 		int y = 600;
 		if ( screenX > x_right  && screenX < x_right + 100  && screenY > y && screenY < y + 100)
 		{
-			this.screen.getPlayer().setState(this.screen.getPlayer().getIdleRight());
+			this.player.setState(this.player.getIdleRight());
 		}
 		else if (screenX > x_left && screenX < x_left + 100 && screenY > y && screenY < y + 100)
 		{
-			this.screen.getPlayer().setState(this.screen.getPlayer().getIdleLeft());
+			this.player.setState(this.player.getIdleLeft());
 		}
 		return false;
 	}
@@ -115,7 +117,7 @@ public class PlayerInputProcessor implements InputProcessor
 		int y = 600;
 		if ( screenX > x  && screenX < x + 10  && screenY > y && screenY < y + 100)
 		{
-			this.screen.getPlayer().setState(this.screen.getPlayer().getIdleRight());
+			this.player.setState(this.player.getIdleRight());
 		}
 		return false;
 	}
