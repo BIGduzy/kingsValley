@@ -81,7 +81,7 @@ public class PlayerGestureListener implements GestureListener
 				{
 					this.player.setState(this.player.getLeft());
 				}
-			else if (this.flingVector.angle() >= 210 && this.flingVector.angle() < 270)
+			else if (this.flingVector.angle() >= 210 && this.flingVector.angle() < 240)
 			{
 				this.player.getJumpLeft().Initialize();
 				this.player.setState(this.player.getJumpLeft());
