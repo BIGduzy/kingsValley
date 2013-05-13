@@ -15,6 +15,8 @@ import java.util.Set;
 
 import Player.Player;
 import bricks.Brick;
+import bricks.StairsLeft;
+import bricks.StairsRight;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
@@ -40,6 +42,10 @@ public class Level
 	private PlayerInputProcessor inputProcessor;
 	private PlayerGestureListener gestureListener;
 	private InputMultiplexer multiplexer;
+	private ArrayList<StairsRight> stairsRights;
+	private ArrayList<StairsLeft> stairsLeft;
+		
+
 
 	//Properties
 	public Player getPlayer() {
@@ -60,7 +66,13 @@ public class Level
 		} catch (IOException e) {
 			e.getMessage();
 		}
-
+		
+		this.stairsRights = new ArrayList<StairsRight>();
+		this.stairsLeft = new ArrayList<StairsLeft>();
+		this.DetectStairsRight();
+		this.DetectStairsRight();
+		
+		
 		//Inputprocessor zorgt voor alle inputdetectie
 		//-----------------------------------------------------
 		this.inputProcessor = new PlayerInputProcessor(this);
@@ -88,8 +100,15 @@ public class Level
 		this.region.put("brick", new TextureRegion(this.spriteSheet, 0, 0, 16, 16));
 		this.region.put("fundament", new TextureRegion(this.spriteSheet, 32, 0, 16, 16));
 		this.region.put("brick_transparent", new TextureRegion(this.spriteSheet, 0, 16, 16, 16));
-		this.region.put("traptopright01", new TextureRegion(this.spriteSheet, 100, 16, 16, 16));
-		this.region.put("traptopleft01", new TextureRegion(this.spriteSheet, 68, 16, 16, 16));
+		this.region.put("trapTopRight01", new TextureRegion(this.spriteSheet, 100, 16, 16, 16));
+		this.region.put("trapTopRight02", new TextureRegion(this.spriteSheet, 116, 16, 16, 16));
+		this.region.put("trapTopLeft01", new TextureRegion(this.spriteSheet, 68, 16, 16, 16));
+		this.region.put("trapTopLeft02", new TextureRegion(this.spriteSheet, 68, 16, 16, 16));
+		this.region.put("trapRight01", new TextureRegion(this.spriteSheet, 100, 0, 16, 16));
+		this.region.put("trapRight02", new TextureRegion(this.spriteSheet, 116, 0, 16, 16));
+		this.region.put("trapLeft01", new TextureRegion(this.spriteSheet, 116, 0, 16, 16));
+		this.region.put("trapLeft02", new TextureRegion(this.spriteSheet, 116, 0, 16, 16));
+		
 
 		//Alle stenen omdraaien
 		for (Map.Entry<String, TextureRegion> e : this.region.entrySet())
@@ -141,14 +160,74 @@ public class Level
 				this.player = new Player(this.game, new Vector2(i,j), 1f);
 				return new Brick(this.game, new Vector2(i,j), this.region.get("brick_transparent"), '+');
 			case 's':
-				return new Brick(this.game, new Vector2(i,j), this.region.get("traptopright01"), 's');
+				return new Brick(this.game, new Vector2(i,j), this.region.get("trapTopRight01"), 's');
 			case 'x':
-				return new Brick(this.game, new Vector2(i,j), this.region.get("traptopleft01"), 'x');
+				return new Brick(this.game, new Vector2(i,j), this.region.get("trapTopLeft01"), 'x');
 			default:
 				return new Brick(this.game, new Vector2(i,j), this.region.get("brick_transparent"), '.');
 
 		}
 
+	}
+	
+	private void DetectStairsRight()
+	{
+		for (int i = 0; i < this.height; i++)
+		{
+			for (int j = 0; j < this.width; j++)
+			{
+				if (this.bricks[j][i].getCharacter() == 's')
+				{
+					int amountOfSteps = 0;
+					int horizontal = j + 1;
+					for (int k = (i+1); k < this.height; k++)
+					{
+						horizontal--;
+						if (this.bricks[horizontal][k].getCharacter() == '1')
+						{
+							amountOfSteps = k - i - 1;
+							break;
+						}
+					}
+					this.stairsRights.add(new StairsRight(this.game,
+														 new Vector2(j * 16, i * 16),
+														 amountOfSteps,
+														 this.region.get("trapRight01"),
+														 this.region.get("trapRight02"),
+														 this.region.get("trapTopRight02")));
+				}
+			}
+		}
+	}
+	
+	private void DetectStairsLeft()
+	{
+		for (int i = 0; i < this.height; i++)
+		{
+			for (int j = 0; j < this.width; j++)
+			{
+				if (this.bricks[j][i].getCharacter() == 's')
+				{
+					int amountOfSteps = 0;
+					int horizontal = j + 1;
+					for (int k = (i+1); k < this.height; k++)
+					{
+						horizontal--;
+						if (this.bricks[horizontal][k].getCharacter() == '1')
+						{
+							amountOfSteps = k - i - 1;
+							break;
+						}
+					}
+					this.stairsRights.add(new StairsRight(this.game,
+														 new Vector2(j * 16, i * 16),
+														 amountOfSteps,
+														 this.region.get("trapLeft01"),
+														 this.region.get("trapLeft02"),
+														 this.region.get("trapTopLeft02")));
+				}
+			}
+		}
 	}
 
 	public void Update(float delta)
@@ -165,6 +244,11 @@ public class Level
 			{
 				this.bricks[j][i].Draw(delta);
 			}				
+		}
+		
+		for (StairsRight stairsRight : this.stairsRights)
+		{
+			stairsRight.Draw(delta);
 		}
 
 		this.player.Draw(delta);

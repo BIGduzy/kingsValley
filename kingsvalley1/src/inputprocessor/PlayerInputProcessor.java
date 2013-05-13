@@ -55,15 +55,27 @@ public class PlayerInputProcessor implements InputProcessor
 		switch(keycode)
 		{
 			case Keys.RIGHT:
-				if (this.player.getState().equals(this.player.getRight()))
+				if (this.player.getState() == (this.player.getRight()))
 				{
 					this.player.setState(this.player.getIdleRight());
 				}
 				break;
 			case Keys.LEFT:
-				if (this.player.getState().equals(this.player.getLeft()))
+				if (this.player.getState() == (this.player.getLeft()))
 				{
 					this.player.setState(this.player.getIdleLeft());
+				}
+				break;
+			case Keys.SPACE:
+				if (this.player.getState() == (this.player.getRight()))
+				{
+					this.player.getJumpRight().Initialize();
+					this.player.setState(this.player.getJumpRight());
+				}
+				else if (this.player.getState() == (this.player.getLeft()))
+				{
+					this.player.getJumpLeft().Initialize();
+					this.player.setState(this.player.getJumpLeft());
 				}
 				break;
 		}	
