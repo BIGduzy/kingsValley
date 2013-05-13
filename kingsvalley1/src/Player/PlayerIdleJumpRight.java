@@ -39,8 +39,8 @@ public class PlayerIdleJumpRight extends AnimatedSprite
 		float y = this.a * (float)Math.pow((double)(this.x - this.h), 2) + this.k;
 		float x = this.startX;
 
-		this.player.setPosition(new Vector2(x, -y));
-		if ( this.player.getPosition().y < this.startY)
+		this.player.setPosition(new Vector2(x, y));
+		if ( this.player.getPosition().y > this.startY)
 		{
 			this.player.setPosition(new Vector2(this.startX, this.startY));
 			this.player.setState(this.player.getIdleRight());

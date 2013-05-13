@@ -38,9 +38,9 @@ public class PlayerJumpRight extends AnimatedSprite
 		float x = this.player.getPosition().x + this.player.getSpeed();
 		float y = (float)(this.a * Math.pow((double)(x - this.h), 2) + this.k);
 
-		this.player.setPosition(new Vector2(x, -y));
-		Gdx.app.log("yrichting:", Float.toString(this.player.getPosition().y));
-		if ( this.player.getPosition().y < this.startY)
+		this.player.setPosition(new Vector2(x, y));
+		//Gdx.app.log("yrichting:", Float.toString(this.player.getPosition().y));
+		if ( this.player.getPosition().y > this.startY)
 		{
 			this.player.setPosition(new Vector2(x, this.startY));
 			this.player.setState(this.player.getRight());

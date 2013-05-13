@@ -40,11 +40,11 @@ public class Level
 	private PlayerInputProcessor inputProcessor;
 	private PlayerGestureListener gestureListener;
 	private InputMultiplexer multiplexer;
-	
+
+	//Properties
 	public Player getPlayer() {
 		return player;
 	}
-
 	public void setPlayer(Player player) {
 		this.player = player;
 	}
@@ -58,9 +58,9 @@ public class Level
 		try {
 			this.LoadAssets();
 		} catch (IOException e) {
-			e.printStackTrace();
+			e.getMessage();
 		}
-		
+
 		//Inputprocessor zorgt voor alle inputdetectie
 		//-----------------------------------------------------
 		this.inputProcessor = new PlayerInputProcessor(this);
@@ -78,6 +78,7 @@ public class Level
 
 		//Voeg de multiplexer toe aan setInputProcessor
 		Gdx.input.setInputProcessor(this.multiplexer);
+
 	}
 
 	private void LoadAssets() throws IOException
@@ -87,16 +88,14 @@ public class Level
 		this.region.put("brick", new TextureRegion(this.spriteSheet, 0, 0, 16, 16));
 		this.region.put("fundament", new TextureRegion(this.spriteSheet, 32, 0, 16, 16));
 		this.region.put("brick_transparent", new TextureRegion(this.spriteSheet, 0, 16, 16, 16));
+		this.region.put("traptopright01", new TextureRegion(this.spriteSheet, 100, 16, 16, 16));
+		this.region.put("traptopleft01", new TextureRegion(this.spriteSheet, 68, 16, 16, 16));
 
 		//Alle stenen omdraaien
-		Set<Entry<String, TextureRegion>> t = this.region.entrySet();
-		Iterator<Entry<String, TextureRegion>> it = t.iterator();
-		while ( it.hasNext())
+		for (Map.Entry<String, TextureRegion> e : this.region.entrySet())
 		{
-			Entry<String, TextureRegion> e = it.next();
-			TextureRegion value = (TextureRegion)e.getValue();
-			value.flip(false, true);
-		}	
+			e.getValue().flip(false, true);
+		}
 
 		this.lines = new ArrayList<String>();
 		FileHandle handle = Gdx.files.internal(this.levelPath);
@@ -140,17 +139,23 @@ public class Level
 				return new Brick(this.game, new Vector2(i,j), this.region.get("brick_transparent"), '.');
 			case '+':
 				this.player = new Player(this.game, new Vector2(i,j), 1f);
-				return new Brick(this.game, new Vector2(i,j), this.region.get("brick_transparent"), '.');
+				return new Brick(this.game, new Vector2(i,j), this.region.get("brick_transparent"), '+');
+			case 's':
+				return new Brick(this.game, new Vector2(i,j), this.region.get("traptopright01"), 's');
+			case 'x':
+				return new Brick(this.game, new Vector2(i,j), this.region.get("traptopleft01"), 'x');
 			default:
 				return new Brick(this.game, new Vector2(i,j), this.region.get("brick_transparent"), '.');
 
 		}
+
 	}
-	
+
 	public void Update(float delta)
 	{
 		this.player.Update(delta);
 	}
+
 
 	public void Draw(float delta)
 	{
@@ -161,6 +166,7 @@ public class Level
 				this.bricks[j][i].Draw(delta);
 			}				
 		}
+
 		this.player.Draw(delta);
 	}
 }
