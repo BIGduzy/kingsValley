@@ -12,7 +12,7 @@ public class StepLeft extends Image
 {
 	//Fields
 	private char character;
-	
+
 	public char getCharacter() {
 		return character;
 	}
@@ -25,7 +25,7 @@ public class StepLeft extends Image
 		super(game, position, region);
 		this.setCharacter(character);
 	}
-	
+
 	public void Draw(float delta)
 	{
 		super.Draw(delta);

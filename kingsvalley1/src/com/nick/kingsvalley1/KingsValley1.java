@@ -1,12 +1,13 @@
 package com.nick.kingsvalley1;
 
-import Screens.PlayScreen;
+
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.FPSLogger;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import Screens.PlayScreen;
 
 public class KingsValley1 extends Game {
 	//Fields
