@@ -8,6 +8,7 @@ import com.badlogic.gdx.Input.Keys;
 
 
 import Player.Player;
+import Player.PlayerIdleJumpRight;
 
 
 public class PlayerInputProcessor implements InputProcessor
@@ -76,6 +77,16 @@ public class PlayerInputProcessor implements InputProcessor
 				{
 					this.player.getJumpLeft().Initialize();
 					this.player.setState(this.player.getJumpLeft());
+				}
+				else if (this.player.getState() == this.player.getIdleRight())
+				{
+					this.player.getIdleJumpRight().Initialize();
+					this.player.setState(this.player.getIdleJumpRight());
+				}
+				else if (this.player.getState() == this.player.getIdleLeft())
+				{
+					this.player.getIdleJumpLeft().Initialize();
+					this.player.setState(this.player.getIdleJumpLeft());
 				}
 				break;
 		}	

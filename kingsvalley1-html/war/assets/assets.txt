@@ -1,6 +1,11 @@
 d:war/
 d:data
 t:data/0.txt
+d:data/arrows
+i:data/arrows/Arrow-Down.png
+i:data/arrows/Arrow-Left.png
+i:data/arrows/Arrow-Right.png
+i:data/arrows/Arrow-Up.png
 d:data/Bricks
 i:data/Bricks/Brick.png
 i:data/Bricks/Brick_transparant.png

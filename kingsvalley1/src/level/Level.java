@@ -17,6 +17,7 @@ import stairsLeft.StairsLeft;
 import stairsRight.StairsRight;
 
 import Player.Player;
+import Player.PlayerManager;
 import bricks.Brick;
 
 import com.badlogic.gdx.Gdx;
@@ -45,6 +46,7 @@ public class Level
 	private InputMultiplexer multiplexer;
 	private ArrayList<StairsRight> stairsRight;
 	private ArrayList<StairsLeft> stairsLeft;
+	private static TextureRegion collisionTexture;
 
 	//Properties
 	public Player getPlayer() {
@@ -54,6 +56,10 @@ public class Level
 		this.player = player;
 	}
 
+	public static TextureRegion getCollisionTexture() {
+		return collisionTexture;
+	}
+	
 	//Constructor
 	public Level(KingsValley1 game, int levelIndex)
 	{
@@ -74,6 +80,9 @@ public class Level
 
 		this.DetectStairsRight();
 		this.DetectStairsLeft();
+		
+		PlayerManager.setPlayer(this.player);
+		PlayerManager.setStairRight(this.stairsRight);
 
 		//Inputprocessor zorgt voor alle inputdetectie
 		//-----------------------------------------------------
@@ -110,6 +119,7 @@ public class Level
 		this.region.put("trapLeft01", new TextureRegion(this.spriteSheet, 68, 0, 16, 16));
 		this.region.put("trapLeft02", new TextureRegion(this.spriteSheet, 84, 0, 16, 16));
 		this.region.put("trapTopLeft02", new TextureRegion(this.spriteSheet, 84, 16, 16, 16));
+		collisionTexture = new TextureRegion(this.spriteSheet,16,0,16,16);
 
 		//Alle stenen omdraaien
 		for (Map.Entry<String, TextureRegion> e : this.region.entrySet())

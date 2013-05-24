@@ -1,7 +1,9 @@
 package Player;
 
+import level.Level;
 import AnimatedSprite.AnimatedSprite;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.nick.kingsvalley1.KingsValley1;
 
@@ -12,6 +14,7 @@ public class Player  {
 		private Vector2 position;
 		private float speed;
 		private Texture texture;
+		private Rectangle collisionRectStairs;
 		private AnimatedSprite state;
 		private PlayerRight walkRight;
 		private PlayerIdleRight idleRight;
@@ -21,10 +24,19 @@ public class Player  {
 		private PlayerJumpLeft jumpLeft;
 		private PlayerIdleJumpLeft idleJumpLeft;
 		private PlayerIdleJumpRight idleJumpRight;
-
+		private PlayerWalkUpStairsRight walkUpStairsRight;
 
 
 		//Properties
+		public PlayerWalkUpStairsRight getWalkUpStairsRight() {
+			return walkUpStairsRight;
+		}
+		public Rectangle getCollisionRectStairs() {
+			return collisionRectStairs;
+		}
+		public void setCollisionRectStairs(Rectangle collisionRectStairs) {
+			this.collisionRectStairs = collisionRectStairs;
+		}
 		public Vector2 getPosition()
 		{
 			return this.position;
@@ -32,6 +44,8 @@ public class Player  {
 		public void setPosition(Vector2 position)
 		{
 			this.position = position;
+			this.collisionRectStairs.x = this.position.x;
+			this.collisionRectStairs.y = this.position.y;
 		}
 		public float getSpeed()
 		{
@@ -114,6 +128,7 @@ public class Player  {
 		{
 			this.game = game;
 			this.position = position;
+			this.collisionRectStairs = new Rectangle(this.position.x,this.position.y,20,16);
 			this.speed = speed;	
 			this.texture = new Texture("data/explorer.png");	
 			this.walkRight = new PlayerRight(this);
@@ -124,6 +139,7 @@ public class Player  {
 			this.jumpLeft = new PlayerJumpLeft(this,-20,32);
 			this.idleJumpLeft = new PlayerIdleJumpLeft(this, -20,32);
 			this.idleJumpRight = new PlayerIdleJumpRight(this,20,32);
+			this.walkUpStairsRight = new PlayerWalkUpStairsRight(this);
 			this.state = this.idleRight;
 		}
 
@@ -138,6 +154,14 @@ public class Player  {
 		//Draw
 		public void Draw(float delta)
 		{
+			this.game.getBatch().setColor(1f,0f,0f,1f);
+			this.game.getBatch().draw(Level.getCollisionTexture(),
+										this.collisionRectStairs.x,
+										this.collisionRectStairs.y+16,
+										this.collisionRectStairs.getWidth(),
+										this.collisionRectStairs.getHeight());
+			this.game.getBatch().setColor(1f,1f,1f,0.9f);
 			this.state.Draw(delta);		
 		}
+		
 }
