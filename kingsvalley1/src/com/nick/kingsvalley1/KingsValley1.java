@@ -44,6 +44,10 @@ public class KingsValley1 extends Game {
 		Gdx.gl.glClearColor(0.06f, 0.06f, 0.06f, 1f);
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		this.logger.log();
+		for (int i = 0; i < 1000000; i++)
+		{
+			//double dummy = Math.pow(Math.PI, Math.PI);
+		}
 		super.render();
 	}
 

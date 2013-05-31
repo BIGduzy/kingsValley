@@ -19,15 +19,22 @@ public class StairsRight
 	private Vector2 position;
 	private int amountOfSteps;
 	private ArrayList<StepRight> stairs;
-	private Rectangle collisionRectBottom;
+	private Rectangle collisionRectBottom,collisionRectTop;
 
-
+	//properties
 	public Rectangle getCollisionRectBottom() {
 		return collisionRectBottom;
 	}
 
 	public void setCollisionRectBottom(Rectangle collisionRectBottom) {
 		this.collisionRectBottom = collisionRectBottom;
+	}
+	public Rectangle getCollisionRectTop() {
+		return collisionRectTop;
+	}
+
+	public void setCollisionRectTop(Rectangle collisionRectBottom) {
+		this.collisionRectTop = collisionRectTop;
 	}
 
 	//Constructor
@@ -68,6 +75,10 @@ public class StairsRight
 											  	  this.position.y - this.amountOfSteps * 16),
 											  	  trapTopRight02,
 											  	  '^'));
+		
+		this.collisionRectTop = new Rectangle(this.position.x + amountOfSteps * 16,
+												this.position.y - amountOfSteps * 16,
+												16,16);
 	}
 
 	public void Draw(float delta)
@@ -78,8 +89,13 @@ public class StairsRight
 									this.collisionRectBottom.y,
 									this.collisionRectBottom.getWidth(),
 									this.collisionRectBottom.getHeight());
+		this.game.getBatch().setColor(0f,1f,0f,0.7f);
+		this.game.getBatch().draw(Level.getCollisionTexture(),
+									this.collisionRectTop.x,
+									this.collisionRectTop.y,
+									this.collisionRectTop.getWidth(),
+									this.collisionRectTop.getHeight());
 		this.game.getBatch().setColor(1f,1f,1f,0.9f);
-		
 		for (StepRight step : this.stairs)
 		{
 			step.Draw(delta);

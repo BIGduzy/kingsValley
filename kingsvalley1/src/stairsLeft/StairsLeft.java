@@ -2,9 +2,12 @@ package stairsLeft;
 
 import java.util.ArrayList;
 
+import level.Level;
+
 import stairsRight.StepRight;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.nick.kingsvalley1.KingsValley1;
 
@@ -17,8 +20,17 @@ public class StairsLeft
 	private Vector2 position;
 	private int amountOfSteps;
 	private ArrayList<StepLeft> stairs;
+	private Rectangle collisionRectBottom;
 
+	//properties
+		public Rectangle getCollisionRectBottom() {
+			return collisionRectBottom;
+		}
 
+		public void setCollisionRectBottom(Rectangle collisionRectBottom) {
+			this.collisionRectBottom = collisionRectBottom;
+		}
+	
 	//Constructor
 	public StairsLeft(KingsValley1 game, Vector2 position, int amountOfSteps,
 					   TextureRegion trapLeft01, TextureRegion trapLeft02,
@@ -35,6 +47,9 @@ public class StairsLeft
 	private void LoadContent(TextureRegion trapLeft01, TextureRegion trapLeft02,
 							 TextureRegion trapTopLeft02)
 	{
+		//Maak een rectangle aan de voet van de trap...
+		this.collisionRectBottom = new Rectangle(this.position.x+16,this.position.y,16,16);
+		
 
 		//Plaats alle traptreden (aantal = amountOfSteps) en.....
 		for (int i = 0; i < this.amountOfSteps; i++)
@@ -59,6 +74,14 @@ public class StairsLeft
 
 	public void Draw(float delta)
 	{
+		this.game.getBatch().setColor(0f,0f,1f,1f);
+		this.game.getBatch().draw(Level.getCollisionTexture(),
+									this.collisionRectBottom.x,
+									this.collisionRectBottom.y,
+									this.collisionRectBottom.getWidth(),
+									this.collisionRectBottom.getHeight());
+		this.game.getBatch().setColor(1f,1f,1f,0.9f);
+		
 		for (StepLeft step : this.stairs)
 		{
 			step.Draw(delta);

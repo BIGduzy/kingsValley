@@ -83,6 +83,7 @@ public class Level
 		
 		PlayerManager.setPlayer(this.player);
 		PlayerManager.setStairRight(this.stairsRight);
+		PlayerManager.setStairsLeft(this.stairsLeft);
 
 		//Inputprocessor zorgt voor alle inputdetectie
 		//-----------------------------------------------------

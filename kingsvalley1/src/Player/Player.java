@@ -25,9 +25,34 @@ public class Player  {
 		private PlayerIdleJumpLeft idleJumpLeft;
 		private PlayerIdleJumpRight idleJumpRight;
 		private PlayerWalkUpStairsRight walkUpStairsRight;
-
+		private PlayerWalkUpStairsLeft walkUpStairsLeft;
+		private PlayerIdleUpStairsRight idleUpStairsRight;
+		private PlayerWalkDownStairsRight walkDownStairsRight;
+		private PlayerIdleDownStairsRight idleDownStairsRight;
 
 		//Properties
+		
+		public PlayerIdleDownStairsRight getIdleDownStairsRight() {
+			return idleDownStairsRight;
+		}
+		public void setIdleDownStairsRight(PlayerIdleDownStairsRight idleDownStairsRight) {
+			this.idleDownStairsRight = idleDownStairsRight;
+		}
+		public PlayerWalkDownStairsRight getWalkDownStairsRight() {
+			return walkDownStairsRight;
+		}
+		public void setWalkDownStairsRight(PlayerWalkDownStairsRight walkDownStairsRight) {
+			this.walkDownStairsRight = walkDownStairsRight;
+		}
+		public PlayerIdleUpStairsRight getIdleUpStairsRight() {
+			return idleUpStairsRight;
+		}
+		public void setIdleUpStairsRight(PlayerIdleUpStairsRight idleUpStairs) {
+			this.idleUpStairsRight = idleUpStairs;
+		}
+		public PlayerWalkUpStairsLeft getWalkUpStairsLeft(){
+			return walkUpStairsLeft;
+		}
 		public PlayerWalkUpStairsRight getWalkUpStairsRight() {
 			return walkUpStairsRight;
 		}
@@ -128,7 +153,7 @@ public class Player  {
 		{
 			this.game = game;
 			this.position = position;
-			this.collisionRectStairs = new Rectangle(this.position.x,this.position.y,20,16);
+			this.collisionRectStairs = new Rectangle(this.position.x,this.position.y+16,20,17);
 			this.speed = speed;	
 			this.texture = new Texture("data/explorer.png");	
 			this.walkRight = new PlayerRight(this);
@@ -140,6 +165,10 @@ public class Player  {
 			this.idleJumpLeft = new PlayerIdleJumpLeft(this, -20,32);
 			this.idleJumpRight = new PlayerIdleJumpRight(this,20,32);
 			this.walkUpStairsRight = new PlayerWalkUpStairsRight(this);
+			this.walkUpStairsLeft = new PlayerWalkUpStairsLeft(this);
+			this.idleUpStairsRight = new PlayerIdleUpStairsRight(this);
+			this.walkDownStairsRight = new PlayerWalkDownStairsRight(this);
+			this.idleDownStairsRight = new PlayerIdleDownStairsRight(this);
 			this.state = this.idleRight;
 		}
 
@@ -157,7 +186,7 @@ public class Player  {
 			this.game.getBatch().setColor(1f,0f,0f,1f);
 			this.game.getBatch().draw(Level.getCollisionTexture(),
 										this.collisionRectStairs.x,
-										this.collisionRectStairs.y+16,
+										this.collisionRectStairs.y,
 										this.collisionRectStairs.getWidth(),
 										this.collisionRectStairs.getHeight());
 			this.game.getBatch().setColor(1f,1f,1f,0.9f);

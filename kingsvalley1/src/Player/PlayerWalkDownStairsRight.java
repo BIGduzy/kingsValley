@@ -2,13 +2,13 @@ package Player;
 
 import AnimatedSprite.AnimatedSprite;
 
-public class PlayerWalkUpStairsRight extends AnimatedSprite{
-
+public class PlayerWalkDownStairsRight extends AnimatedSprite{
+	
 	//fields
 	private Player player;
 	
-	//constructor
-	public PlayerWalkUpStairsRight(Player player) {
+	public PlayerWalkDownStairsRight(Player player)
+	{
 		super(player);
 		this.player = player;
 		this.Initialize();
@@ -17,15 +17,17 @@ public class PlayerWalkUpStairsRight extends AnimatedSprite{
 	public void Initialize()
 	{
 		this.i = 3;
+		this.flipX = true;
 	}
-	
+
 	public void Update(float delta)
 	{
 		this.player.setPosition(this.player.getPosition().
-				add(this.player.getSpeed(), -this.player.getSpeed()));
-		if (PlayerManager.CollisionDetectionTopStairsRight())
+				add(-this.player.getSpeed(), +this.player.getSpeed()));
+		
+		if (PlayerManager.CollisionDetectionBottomStairsRight())
 		{
-			this.player.setState(this.player.getRight());
+			this.player.setState(this.player.getLeft());
 		}
 		super.Update(delta);
 	}
@@ -34,5 +36,4 @@ public class PlayerWalkUpStairsRight extends AnimatedSprite{
 	{
 		super.Draw(delta);
 	}
-
 }
