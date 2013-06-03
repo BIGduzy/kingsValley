@@ -22,9 +22,8 @@ public class PlayerWalkDownStairsRight extends AnimatedSprite{
 
 	public void Update(float delta)
 	{
-		this.player.setPosition(this.player.getPosition().
-				add(-this.player.getSpeed(), +this.player.getSpeed()));
-		
+		this.player.setPosition(this.player.getPosition().add(-this.player.getSpeed(),
+				this.player.getSpeed()));
 		if (PlayerManager.CollisionDetectionBottomStairsRight())
 		{
 			this.player.setState(this.player.getLeft());

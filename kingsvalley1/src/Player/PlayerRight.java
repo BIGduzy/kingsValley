@@ -24,7 +24,8 @@ public class PlayerRight extends AnimatedSprite{
 				add(new Vector2(this.player.getSpeed(),0f)));
 		
 		// collision detection tussen onderkant trap en player
-		if (PlayerManager.CollisionDetectionBottomStairsRight() && Gdx.input.isKeyPressed(Keys.UP)){
+		if (PlayerManager.CollisionDetectionBottomStairsRight() &&
+				(Gdx.input.isKeyPressed(Keys.UP)|| Gdx.input.isTouched())){
 			
 			this.player.setState(this.player.getWalkUpStairsRight());
 		}

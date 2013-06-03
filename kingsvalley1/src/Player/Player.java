@@ -25,10 +25,12 @@ public class Player  {
 		private PlayerIdleJumpLeft idleJumpLeft;
 		private PlayerIdleJumpRight idleJumpRight;
 		private PlayerWalkUpStairsRight walkUpStairsRight;
-		private PlayerWalkUpStairsLeft walkUpStairsLeft;
+		private PlayerWalkUpStairsLeft  walkUpStairsLeft;
 		private PlayerIdleUpStairsRight idleUpStairsRight;
+		private PlayerIdleUpStairsLeft idleUpStairsLeft;
 		private PlayerWalkDownStairsRight walkDownStairsRight;
 		private PlayerIdleDownStairsRight idleDownStairsRight;
+		private PlayerWalkDownStairsLeft  walkDownStairsLeft;
 
 		//Properties
 		
@@ -50,6 +52,12 @@ public class Player  {
 		public void setIdleUpStairsRight(PlayerIdleUpStairsRight idleUpStairs) {
 			this.idleUpStairsRight = idleUpStairs;
 		}
+		public PlayerIdleUpStairsLeft getIdleUpStairsLeft() {
+			return idleUpStairsLeft;
+		}
+		public void setIdleUpStairsLeft(PlayerIdleUpStairsLeft idleUpStairs) {
+			this.idleUpStairsLeft = idleUpStairs;
+		}
 		public PlayerWalkUpStairsLeft getWalkUpStairsLeft(){
 			return walkUpStairsLeft;
 		}
@@ -70,7 +78,7 @@ public class Player  {
 		{
 			this.position = position;
 			this.collisionRectStairs.x = this.position.x;
-			this.collisionRectStairs.y = this.position.y;
+			this.collisionRectStairs.y = this.position.y+16f;
 		}
 		public float getSpeed()
 		{
@@ -146,7 +154,12 @@ public class Player  {
 		public void setIdleJumpRight(PlayerIdleJumpRight idleJumpRight) {
 			this.idleJumpRight = idleJumpRight;
 		}
-		
+		public PlayerWalkDownStairsLeft getWalkDownStairsLeft() {
+			return walkDownStairsLeft;
+		}
+		public void setWalkDownStairsLeft(PlayerWalkDownStairsLeft walkDownStairsLeft) {
+			this.walkDownStairsLeft = walkDownStairsLeft;
+		}
 		
 		//Constructor
 		public Player(KingsValley1 game, Vector2 position, float speed)
@@ -167,7 +180,9 @@ public class Player  {
 			this.walkUpStairsRight = new PlayerWalkUpStairsRight(this);
 			this.walkUpStairsLeft = new PlayerWalkUpStairsLeft(this);
 			this.idleUpStairsRight = new PlayerIdleUpStairsRight(this);
+			this.idleUpStairsLeft = new PlayerIdleUpStairsLeft(this);
 			this.walkDownStairsRight = new PlayerWalkDownStairsRight(this);
+			this.walkDownStairsLeft = new PlayerWalkDownStairsLeft(this);
 			this.idleDownStairsRight = new PlayerIdleDownStairsRight(this);
 			this.state = this.idleRight;
 		}

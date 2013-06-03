@@ -82,7 +82,7 @@ public class Level
 		this.DetectStairsLeft();
 		
 		PlayerManager.setPlayer(this.player);
-		PlayerManager.setStairRight(this.stairsRight);
+		PlayerManager.setStairsRight(this.stairsRight);
 		PlayerManager.setStairsLeft(this.stairsLeft);
 
 		//Inputprocessor zorgt voor alle inputdetectie

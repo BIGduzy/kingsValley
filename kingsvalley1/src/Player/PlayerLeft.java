@@ -23,16 +23,20 @@ public class PlayerLeft extends AnimatedSprite{
 	public void Update(float delta)
 	{
 		this.player.setPosition(this.player.getPosition().
-				add(new Vector2(-this.player.getSpeed(),0f)));
-		
-		//collision detection tussen onderkant trap en player
-		if (PlayerManager.CollisionDetectionBottomStairsLeft() && Gdx.input.isKeyPressed(Keys.UP)){
-			
+				add(new Vector2(-this.player.getSpeed(), 0f)));
+
+		if (PlayerManager.CollisionDetectionTopStairsRight() &&
+			(Gdx.input.isTouched() || Gdx.input.isKeyPressed(Keys.DOWN)))
+		{
+			this.player.setState(this.player.getWalkDownStairsRight());
+		}
+
+		if (PlayerManager.CollisionDetectionBottomStairsLeft() &&
+			(Gdx.input.isTouched() || Gdx.input.isKeyPressed(Keys.UP)))
+		{
 			this.player.setState(this.player.getWalkUpStairsLeft());
 		}
-		
 		super.Update(delta);
-		
 	}
 	
 	public void Draw(float delta)
