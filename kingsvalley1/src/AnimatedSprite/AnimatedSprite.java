@@ -4,7 +4,7 @@ import Player.Player;
 
 public class AnimatedSprite {
 	//fields
-	private Player player;
+	protected Player player;
 	private int[] xValue = {0,18,36,54,72,90,108,126};
 	protected int i = 0;
 	protected boolean flipX = false;

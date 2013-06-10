@@ -1,5 +1,8 @@
 package Player;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
+
 import AnimatedSprite.AnimatedSprite;
 
 
@@ -17,6 +20,11 @@ public class PlayerIdleUpStairsLeft extends AnimatedSprite
 
 	public void Update(float delta)
 	{
+		if (Gdx.input.isKeyPressed(Keys.RIGHT))
+		{			
+			this.player.getWalkDownStairsLeft().Initialize();
+			this.player.setState(this.player.getWalkDownStairsLeft());
+		}
 
 	}
 

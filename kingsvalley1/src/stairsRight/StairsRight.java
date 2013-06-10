@@ -19,21 +19,20 @@ public class StairsRight
 	private Vector2 position;
 	private int amountOfSteps;
 	private ArrayList<StepRight> stairs;
-	private Rectangle collisionRectBottom,collisionRectTop;
+	private Rectangle collisionRectBottom, collisionRectTop;
 
-	//properties
+	//De properties
 	public Rectangle getCollisionRectBottom() {
 		return collisionRectBottom;
 	}
-
 	public void setCollisionRectBottom(Rectangle collisionRectBottom) {
 		this.collisionRectBottom = collisionRectBottom;
 	}
+
 	public Rectangle getCollisionRectTop() {
 		return collisionRectTop;
 	}
-
-	public void setCollisionRectTop(Rectangle collisionRectBottom) {
+	public void setCollisionRectTop(Rectangle collisionRectTop) {
 		this.collisionRectTop = collisionRectTop;
 	}
 
@@ -53,9 +52,12 @@ public class StairsRight
 	private void LoadContent(TextureRegion trapRight01, TextureRegion trapRight02,
 							 TextureRegion trapTopRight02)
 	{
-		//Maak een rectangle aan de voet van de trap...
-		this.collisionRectBottom = new Rectangle(this.position.x,this.position.y,16,16);
-		
+		//Maak een rectangle aan de voet van de trap....
+		this.collisionRectBottom = new Rectangle(this.position.x,
+												 this.position.y,
+												 16f,
+												 16f);
+
 		//Plaats alle traptreden (aantal = amountOfSteps) en.....
 		for (int i = 0; i < this.amountOfSteps; i++)
 		{
@@ -75,27 +77,28 @@ public class StairsRight
 											  	  this.position.y - this.amountOfSteps * 16),
 											  	  trapTopRight02,
 											  	  '^'));
-		
 		this.collisionRectTop = new Rectangle(this.position.x + amountOfSteps * 16,
-												this.position.y - amountOfSteps * 16,
-												16,16);
+											  this.position.y - amountOfSteps * 16,
+											  16f,
+											  16f);
 	}
 
 	public void Draw(float delta)
 	{
-		this.game.getBatch().setColor(0f,0f,1f,1f);
+		/*
+		this.game.getBatch().setColor(0f, 0f, 1f, 1f);
 		this.game.getBatch().draw(Level.getCollisionTexture(),
-									this.collisionRectBottom.x,
-									this.collisionRectBottom.y,
-									this.collisionRectBottom.getWidth(),
-									this.collisionRectBottom.getHeight());
-		this.game.getBatch().setColor(0f,1f,0f,0.7f);
+								  this.collisionRectBottom.x, 
+								  this.collisionRectBottom.y,
+								  this.collisionRectBottom.getWidth(),
+								  this.collisionRectBottom.getHeight());
+		this.game.getBatch().setColor(0f, 1f, 0f, 0.6f);
 		this.game.getBatch().draw(Level.getCollisionTexture(),
-									this.collisionRectTop.x,
-									this.collisionRectTop.y,
-									this.collisionRectTop.getWidth(),
-									this.collisionRectTop.getHeight());
-		this.game.getBatch().setColor(1f,1f,1f,0.9f);
+								  this.collisionRectTop.x, 
+								  this.collisionRectTop.y,
+								  this.collisionRectTop.getWidth(),
+								  this.collisionRectTop.getHeight());*/
+		this.game.getBatch().setColor(1f,1f, 1f, 1f);
 		for (StepRight step : this.stairs)
 		{
 			step.Draw(delta);

@@ -1,24 +1,32 @@
 package Player;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
+
 import AnimatedSprite.AnimatedSprite;
 
-public class PlayerIdleDownStairsRight extends AnimatedSprite{
+public class PlayerIdleDownStairsRight extends AnimatedSprite
+{
 
-	
-private Player player;
-	
-	public PlayerIdleDownStairsRight(Player player) {
-		// super verwijst naar de parent class AnimatedSprite
+	public PlayerIdleDownStairsRight(Player player) 
+	{
+		// Super verwijst naar de parent class AnimatedSprite
 		super(player);
 		this.i = 7;
 		this.flipX = true;
-		this.player = player;
-	}
-	
-	public void Update(float delta){
 	}
 
-	public void Draw(float delta){
+	public void Update(float delta)
+	{
+		if (Gdx.input.isKeyPressed(Keys.RIGHT))
+		{			
+			this.player.getWalkUpStairsRight().Initialize();
+			this.player.setState(this.player.getWalkUpStairsRight());
+		}
+	}
+
+	public void Draw(float delta)
+	{
 		super.Draw(delta);
 	}
 }

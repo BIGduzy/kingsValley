@@ -7,27 +7,27 @@ import com.badlogic.gdx.math.Vector2;
 import AnimatedSprite.AnimatedSprite;
 
 public class PlayerLeft extends AnimatedSprite{
-	
-	//fields
+
+	//Fields
 	private Player player;
-	
-	
-	//constructor
+
+	//Constructor
 	public PlayerLeft(Player player)
 	{
-		super(player);	
+		super(player);
 		this.player = player;
 		this.flipX = true;
 	}
-	
+
 	public void Update(float delta)
 	{
 		this.player.setPosition(this.player.getPosition().
 				add(new Vector2(-this.player.getSpeed(), 0f)));
 
-		if (PlayerManager.CollisionDetectionTopStairsRight() &&
+		if (PlayerManager.CollisionDectectionTopStairsRight() &&
 			(Gdx.input.isTouched() || Gdx.input.isKeyPressed(Keys.DOWN)))
 		{
+			this.player.getWalkDownStairsRight().Initialize();
 			this.player.setState(this.player.getWalkDownStairsRight());
 		}
 
@@ -38,9 +38,10 @@ public class PlayerLeft extends AnimatedSprite{
 		}
 		super.Update(delta);
 	}
-	
+
 	public void Draw(float delta)
 	{
 		super.Draw(delta);
 	}
+
 }

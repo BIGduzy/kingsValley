@@ -5,24 +5,25 @@ import com.badlogic.gdx.Input.Keys;
 
 import AnimatedSprite.AnimatedSprite;
 
-
-
-public class PlayerIdleUpStairsRight extends AnimatedSprite
-{
-
-	public PlayerIdleUpStairsRight(Player player) 
+public class PlayerIdleDownStairsLeft extends AnimatedSprite
+{	
+	public PlayerIdleDownStairsLeft(Player player) 
 	{
 		// Super verwijst naar de parent class AnimatedSprite
 		super(player);
-		this.i = 7;		
+	}
+
+	public void Initialize()
+	{
+		this.i = 7;
 	}
 
 	public void Update(float delta)
 	{
 		if (Gdx.input.isKeyPressed(Keys.LEFT))
 		{			
-			this.player.getWalkDownStairsRight().Initialize();
-			this.player.setState(this.player.getWalkDownStairsRight());
+			this.player.getWalkUpStairsLeft().Initialize();
+			this.player.setState(this.player.getWalkUpStairsLeft());
 		}
 	}
 

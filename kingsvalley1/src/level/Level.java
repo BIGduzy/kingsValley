@@ -1,5 +1,6 @@
 package level;
 
+import floor.Floor;
 import gesturelistener.PlayerGestureListener;
 import inputprocessor.PlayerInputProcessor;
 
@@ -46,20 +47,21 @@ public class Level
 	private InputMultiplexer multiplexer;
 	private ArrayList<StairsRight> stairsRight;
 	private ArrayList<StairsLeft> stairsLeft;
+	private ArrayList<Floor> floors;
 	private static TextureRegion collisionTexture;
 
 	//Properties
 	public Player getPlayer() {
 		return player;
 	}
-	public void setExplorer(Player palyer) {
+	public void setPlayer(Player player) {
 		this.player = player;
 	}
 
 	public static TextureRegion getCollisionTexture() {
 		return collisionTexture;
 	}
-	
+
 	//Constructor
 	public Level(KingsValley1 game, int levelIndex)
 	{
@@ -78,12 +80,17 @@ public class Level
 		//Stop alle linkertrappen in een arraylist object
 		this.stairsLeft = new ArrayList<StairsLeft>();
 
+		this.floors = new ArrayList<Floor>();
+
 		this.DetectStairsRight();
 		this.DetectStairsLeft();
-		
+		this.DetectFloors();
+
+
 		PlayerManager.setPlayer(this.player);
 		PlayerManager.setStairsRight(this.stairsRight);
 		PlayerManager.setStairsLeft(this.stairsLeft);
+		PlayerManager.setFloors(this.floors);
 
 		//Inputprocessor zorgt voor alle inputdetectie
 		//-----------------------------------------------------
@@ -120,7 +127,7 @@ public class Level
 		this.region.put("trapLeft01", new TextureRegion(this.spriteSheet, 68, 0, 16, 16));
 		this.region.put("trapLeft02", new TextureRegion(this.spriteSheet, 84, 0, 16, 16));
 		this.region.put("trapTopLeft02", new TextureRegion(this.spriteSheet, 84, 16, 16, 16));
-		collisionTexture = new TextureRegion(this.spriteSheet,16,0,16,16);
+		collisionTexture = new TextureRegion(this.spriteSheet, 16, 0, 16, 16);
 
 		//Alle stenen omdraaien
 		for (Map.Entry<String, TextureRegion> e : this.region.entrySet())
@@ -166,6 +173,8 @@ public class Level
 				return new Brick(this.game, new Vector2(i,j), this.region.get("brick"), '1');
 			case '2':
 				return new Brick(this.game, new Vector2(i,j), this.region.get("fundament"), '2');
+			case '3':
+				return new Brick(this.game, new Vector2(i,j), this.region.get("brick_transparent"), '3');
 			case '.':
 				return new Brick(this.game, new Vector2(i,j), this.region.get("brick_transparent"), '.');
 			case '+':
@@ -242,6 +251,39 @@ public class Level
 		}
 	}
 
+	private void DetectFloors()
+	{
+		for (int i = 0; i < this.height; i++)
+		{
+			int amountOfBricks = 0;
+			Vector2 position = Vector2.Zero;
+
+			for (int j = 0; j < this.width; j++)
+			{
+				if (this.bricks[j][i].getCharacter() == '1' ||
+					this.bricks[j][i].getCharacter() == 's' ||
+					this.bricks[j][i].getCharacter() == 'x' ||
+					this.bricks[j][i].getCharacter() == '3')
+				{
+					if (amountOfBricks == 0)
+					{
+						position = new Vector2(j * 16, i * 16);
+					}
+					amountOfBricks++;
+				}
+				else
+				{
+					if (amountOfBricks > 0)
+					{
+						this.floors.add(new Floor(this.game, position, amountOfBricks));
+						amountOfBricks = 0;
+						position = Vector2.Zero;
+					}
+				}
+			}
+		}		
+	}
+
 	public void Update(float delta)
 	{
 		this.player.Update(delta);
@@ -266,6 +308,11 @@ public class Level
 		for (StairsLeft stairsLeft : this.stairsLeft)
 		{
 			stairsLeft.Draw(delta);
+		}
+
+		for (Floor floor : this.floors)
+		{
+			floor.Draw(delta);
 		}
 
 		this.player.Draw(delta);

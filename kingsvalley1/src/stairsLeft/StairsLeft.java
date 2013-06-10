@@ -86,7 +86,7 @@ public class StairsLeft
 
 	public void Draw(float delta)
 	{
-		this.game.getBatch().setColor(1f, 0f, 1f, 1f);
+		/*this.game.getBatch().setColor(1f, 0f, 1f, 1f);
 		this.game.getBatch().draw(Level.getCollisionTexture(),
 								  this.collisionRectBottom.x, 
 								  this.collisionRectBottom.y,
@@ -97,7 +97,7 @@ public class StairsLeft
 								  this.collisionRectTop.x, 
 								  this.collisionRectTop.y,
 								  this.collisionRectTop.getWidth(),
-								  this.collisionRectTop.getHeight());
+								  this.collisionRectTop.getHeight());*/
 		this.game.getBatch().setColor(1f, 1f, 1f, 1f);
 		for (StepLeft step : this.stairs)
 		{

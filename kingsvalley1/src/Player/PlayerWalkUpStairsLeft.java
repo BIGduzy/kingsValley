@@ -26,9 +26,9 @@ public class PlayerWalkUpStairsLeft extends AnimatedSprite
 
 		this.player.setPosition(this.player.getPosition().
 				add(-this.player.getSpeed(), -this.player.getSpeed()));
-		if (PlayerManager.CollisionDetectionTopStairsRight())
+		if (PlayerManager.CollisionDectectionTopStairsLeft())
 		{
-			this.player.setState(this.player.getRight());
+			this.player.setState(this.player.getLeft());
 		}
 		super.Update(delta);
 	}

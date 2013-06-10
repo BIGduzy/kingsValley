@@ -7,35 +7,43 @@ import com.badlogic.gdx.math.Vector2;
 import AnimatedSprite.AnimatedSprite;
 
 public class PlayerRight extends AnimatedSprite{
-	
-	//fields
+
+	//Fields
 	private Player player;
-	
-	//constructor
+
+	//Constructor
 	public PlayerRight(Player player)
 	{
-		super(player);	
+		super(player);
 		this.player = player;
 	}
-	
+
 	public void Update(float delta)
 	{
 		this.player.setPosition(this.player.getPosition().
-				add(new Vector2(this.player.getSpeed(),0f)));
-		
-		// collision detection tussen onderkant trap en player
+				add(new Vector2(this.player.getSpeed(), 0f)));
+
+		if (PlayerManager.CollisionDectectionTopStairsLeft() &&
+				(Gdx.input.isTouched() || Gdx.input.isKeyPressed(Keys.DOWN)))
+			{
+				this.player.setState(this.player.getWalkDownStairsLeft());
+			}
+		/******************************************************************
+		 * Check of er een botsing is tussen de rectangle van de player *
+		 * en de rectangle van de onderkant van de trap					  *
+		 ******************************************************************/
 		if (PlayerManager.CollisionDetectionBottomStairsRight() &&
-				(Gdx.input.isKeyPressed(Keys.UP)|| Gdx.input.isTouched())){
-			
+			(Gdx.input.isTouched() || Gdx.input.isKeyPressed(Keys.UP)))
+		{
 			this.player.setState(this.player.getWalkUpStairsRight());
 		}
-		
+
 		super.Update(delta);
-		
 	}
-	
+
 	public void Draw(float delta)
 	{
 		super.Draw(delta);
 	}
+
 }

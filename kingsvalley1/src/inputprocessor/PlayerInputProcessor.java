@@ -29,49 +29,62 @@ public class PlayerInputProcessor implements InputProcessor
 		switch(keycode)
 		{
 			case Keys.RIGHT:
-				if (this.player.getState() == this.player.getIdleRight()||
-					this.player.getState() == this.player.getIdleLeft() ||
-					this.player.getState() == this.player.getLeft() )
+				if (this.player.getState().equals(this.player.getIdleRight())||
+					this.player.getState().equals(this.player.getIdleLeft()) ||
+					this.player.getState().equals(this.player.getLeft()) )
 				{
 					this.player.setState(this.player.getRight());
 				}
-				else if ( this.player.getState() == this.player.getIdleUpStairsRight() ||
-						  this.player.getState() == this.player.getIdleDownStairsRight())
+				else if ( this.player.getState().equals(this.player.getIdleUpStairsRight()) ||
+						  this.player.getState().equals(this.player.getIdleDownStairsRight()))
 				{
 					this.player.getWalkUpStairsRight().Initialize();
 					this.player.setState(this.player.getWalkUpStairsRight());
 				}
+				else if (this.player.getState().equals(this.player.getIdleUpStairsLeft()) ||
+						 this.player.getState().equals(this.player.getIdleDownStairsLeft()))
+				{
+					this.player.getWalkDownStairsLeft().Initialize();
+					this.player.setState(this.player.getWalkDownStairsLeft());
+				}
 				break;	
 			case Keys.LEFT:
-				if (this.player.getState() == this.player.getIdleLeft() ||
-					this.player.getState() == this.player.getIdleRight()||
-					this.player.getState() == this.player.getRight())
+				if (this.player.getState().equals(this.player.getIdleLeft()) ||
+					this.player.getState().equals(this.player.getIdleRight())||
+					this.player.getState().equals(this.player.getRight()))
 				{
 					this.player.setState(this.player.getLeft());
 				}
-				else if (this.player.getState() == this.player.getIdleUpStairsRight())
+				else if (this.player.getState().equals(this.player.getIdleUpStairsRight()) ||
+						 this.player.getState().equals(this.player.getIdleDownStairsRight()))
 				{
 					this.player.getWalkDownStairsRight().Initialize();
 					this.player.setState(this.player.getWalkDownStairsRight());
 				}
+				else if (this.player.getState().equals(this.player.getIdleDownStairsLeft()) ||
+						this.player.getState().equals(this.player.getIdleUpStairsLeft()))
+				{
+					this.player.getWalkUpStairsLeft().Initialize();
+					this.player.setState(this.player.getWalkUpStairsLeft());
+				}
 				break;
 			case Keys.SPACE:
-				if (this.player.getState() == this.player.getRight())
+				if (this.player.getState().equals(this.player.getRight()))
 				{
 					this.player.getJumpRight().Initialize();
 					this.player.setState(this.player.getJumpRight());
 				}
-				else if (this.player.getState() == this.player.getLeft())
+				else if (this.player.getState().equals(this.player.getLeft()))
 				{
 					this.player.getJumpLeft().Initialize();
 					this.player.setState(this.player.getJumpLeft());
 				}
-				else if (this.player.getState() == this.player.getIdleRight())
+				else if (this.player.getState().equals(this.player.getIdleRight()))
 				{
 					this.player.getIdleJumpRight().Initialize();
 					this.player.setState(this.player.getIdleJumpRight());
 				}
-				else if (this.player.getState() == this.player.getIdleLeft())
+				else if (this.player.getState().equals(this.player.getIdleLeft()))
 				{
 					this.player.getIdleJumpLeft().Initialize();
 					this.player.setState(this.player.getIdleJumpLeft());
@@ -87,25 +100,30 @@ public class PlayerInputProcessor implements InputProcessor
 		switch(keycode)
 		{
 			case Keys.RIGHT:
-				if (this.player.getState() == this.player.getRight())
+				if (this.player.getState().equals(this.player.getRight()))
 				{
 					this.player.setState(this.player.getIdleRight());
 				}
-				else if (this.player.getState() == this.player.getWalkUpStairsRight())
+				else if (this.player.getState().equals(this.player.getWalkUpStairsRight()))
 				{
 					this.player.setState(this.player.getIdleUpStairsRight());
 				}
+				else if (this.player.getState().equals(this.player.getWalkDownStairsLeft()))
+				{
+					this.player.getIdleDownStairsLeft().Initialize();
+					this.player.setState(this.player.getIdleDownStairsLeft());
+				}
 				break;
 			case Keys.LEFT:
-				if (this.player.getState() == this.player.getLeft())
+				if (this.player.getState().equals(this.player.getLeft()))
 				{
 					this.player.setState(this.player.getIdleLeft());
 				}
-				else if (this.player.getState() == this.player.getWalkDownStairsRight())
+				else if (this.player.getState().equals(this.player.getWalkDownStairsRight()))
 				{
 					this.player.setState(this.player.getIdleDownStairsRight());
 				}
-				else if (this.player.getState() == this.player.getWalkUpStairsLeft())
+				else if (this.player.getState().equals(this.player.getWalkUpStairsLeft()))
 				{
 					this.player.setState(this.player.getIdleUpStairsLeft());
 				}
@@ -123,46 +141,18 @@ public class PlayerInputProcessor implements InputProcessor
 	@Override
 	public boolean touchDown(int screenX, int screenY, int pointer, int button)
 	{
-		int x_right = 1200;
-		int x_left = 0;
-		int y = 600;
-		if ( screenX > x_right  && screenX < x_right + 100  && screenY > y && screenY < y + 100)
-		{
-			this.player.setState(this.player.getRight());
-		}
-		else if (screenX > x_left && screenX < x_left + 100 && screenY > y && screenY < y + 100)
-		{
-			this.player.setState(this.player.getLeft());
-		}
 		return false;
 	}
 
 	@Override
 	public boolean touchUp(int screenX, int screenY, int pointer, int button)
 	{
-		int x_right = 1200;
-		int x_left = 0;
-		int y = 600;
-		if ( screenX > x_right  && screenX < x_right + 100  && screenY > y && screenY < y + 100)
-		{
-			this.player.setState(this.player.getIdleRight());
-		}
-		else if (screenX > x_left && screenX < x_left + 100 && screenY > y && screenY < y + 100)
-		{
-			this.player.setState(this.player.getIdleLeft());
-		}
 		return false;
 	}
 
 	@Override
 	public boolean touchDragged(int screenX, int screenY, int pointer) 
 	{
-		int x = 1200;
-		int y = 600;
-		if ( screenX > x  && screenX < x + 10  && screenY > y && screenY < y + 100)
-		{
-			this.player.setState(this.player.getIdleRight());
-		}
 		return false;
 	}
 

@@ -1,9 +1,10 @@
 package nl.am1a.kingsvalley1.client;
 
-import nl.am1a.kingsvalley1.KingsValley;
+
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.backends.gwt.GwtApplication;
 import com.badlogic.gdx.backends.gwt.GwtApplicationConfiguration;
+import com.nick.kingsvalley1.KingsValley1;
 
 public class GwtLauncher extends GwtApplication {
 	@Override
@@ -14,6 +15,6 @@ public class GwtLauncher extends GwtApplication {
 
 	@Override
 	public ApplicationListener getApplicationListener () {
-		return new KingsValley();
+		return new KingsValley1();
 	}
 }
