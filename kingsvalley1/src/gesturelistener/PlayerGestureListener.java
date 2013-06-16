@@ -39,11 +39,11 @@ public class PlayerGestureListener implements GestureListener
 	@Override
 	public boolean tap(float x, float y, int count, int button)
 	{
-		if ( this.player.getState() == (this.player.getRight()))
+		if ( this.player.getState() == (this.player.getWalkRight()))
 		{
 			this.player.setState(this.player.getIdleRight());
 		}
-		else if ( this.player.getState() == (this.player.getLeft()))
+		else if ( this.player.getState() == (this.player.getWalkLeft()))
 		{
 			this.player.setState(this.player.getIdleLeft());
 		}
@@ -80,13 +80,13 @@ public class PlayerGestureListener implements GestureListener
 						}
 						else
 						{
-							this.player.setState(this.player.getRight());
+							this.player.setState(this.player.getWalkRight());
 						}
 					}
 					else if (this.flingVector.angle() >= 300 && this.flingVector.angle() <= 330)
 					{
-						if (this.player.getState() == this.player.getRight() ||
-						    this.player.getState() == this.player.getLeft()	 ||
+						if (this.player.getState() == this.player.getWalkRight() ||
+						    this.player.getState() == this.player.getWalkLeft()	 ||
 						    this.player.getState() == this.player.getIdleRight() ||
 						    this.player.getState() == this.player.getIdleLeft())
 						{
@@ -96,8 +96,8 @@ public class PlayerGestureListener implements GestureListener
 					}
 					else if (this.flingVector.angle() > 270 && this.flingVector.angle() < 300)
 					{
-						if (this.player.getState() == this.player.getRight() ||
-							    this.player.getState() == this.player.getLeft()  ||
+						if (this.player.getState() == this.player.getWalkRight() ||
+							    this.player.getState() == this.player.getWalkLeft()  ||
 							    this.player.getState() == this.player.getIdleRight() ||
 							    this.player.getState() == this.player.getIdleLeft())
 						{
@@ -117,13 +117,13 @@ public class PlayerGestureListener implements GestureListener
 						}
 						else
 						{
-							this.player.setState(this.player.getLeft());
+							this.player.setState(this.player.getWalkLeft());
 						}
 					}
 					else if (this.flingVector.angle() >= 210 && this.flingVector.angle() <= 240)
 					{
-						if (this.player.getState() == this.player.getRight() ||
-							    this.player.getState() == this.player.getLeft() ||
+						if (this.player.getState() == this.player.getWalkRight() ||
+							    this.player.getState() == this.player.getWalkLeft() ||
 							    this.player.getState() == this.player.getIdleRight() ||
 							    this.player.getState() == this.player.getIdleLeft())
 						{
@@ -133,8 +133,8 @@ public class PlayerGestureListener implements GestureListener
 					}
 					else if (this.flingVector.angle() >= 240 && this.flingVector.angle() < 270)
 					{
-						if (this.player.getState() == this.player.getRight() ||
-							    this.player.getState() == this.player.getLeft()  ||
+						if (this.player.getState() == this.player.getWalkRight() ||
+							    this.player.getState() == this.player.getWalkLeft()  ||
 							    this.player.getState() == this.player.getIdleRight() ||
 							    this.player.getState() == this.player.getIdleLeft())
 						{

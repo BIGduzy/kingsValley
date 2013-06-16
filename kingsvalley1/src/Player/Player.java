@@ -1,7 +1,8 @@
 package Player;
 
 import level.Level;
-import AnimatedSprite.AnimatedSprite;
+import animatedSprite.AnimatedSprite;
+
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -16,10 +17,10 @@ public class Player
 	private Texture texture;
 	private Rectangle collisionRectStairs;
 	private AnimatedSprite state;
-	private PlayerRight Right;
+	private PlayerWalkRight walkRight;
 	private PlayerIdleRight idleRight;
 	private PlayerIdleLeft idleLeft;
-	private PlayerLeft Left;
+	private PlayerWalkLeft walkLeft;
 	private PlayerJumpRight jumpRight;
 	private PlayerJumpLeft jumpLeft;
 	private PlayerIdleJumpLeft idleJumpLeft;
@@ -32,7 +33,12 @@ public class Player
 	private PlayerIdleUpStairsLeft idleUpStairsLeft;
 	private PlayerWalkDownStairsLeft walkDownStairsLeft;
 	private PlayerIdleDownStairsLeft idleDownStairsLeft;
+	private PlayerFallOfFloorLeft fallOfFloorLeft;
+	private PlayerFallOfFloorRight fallOfFloorRight;
+	private PlayerIdleLeftNoLineairMovement idleLeftNoLineairMovement;
+	private PlayerIdleRightNoLineairMovement idleRightNoLineairMovement;
 	private float pixelsThroughFloor;
+	private float pixelsInWallLeft, pixelsInWallRight;
 
 	//Properties
 	public Vector2 getPosition()
@@ -73,13 +79,13 @@ public class Player
 	{
 		this.idleRight = idleRight;
 	}
-	public PlayerRight getRight()
+	public PlayerWalkRight getWalkRight()
 	{
-		return this.Right;
+		return this.walkRight;
 	}
-	public void setWalkRight(PlayerRight Right)
+	public void setWalkRight(PlayerWalkRight walkRight)
 	{
-		this.Right = Right;
+		this.walkRight = walkRight;
 	}
 	public PlayerIdleLeft getIdleLeft()
 	{
@@ -89,11 +95,11 @@ public class Player
 	{
 		this.idleLeft = idleLeft;
 	}	
-	public PlayerLeft getLeft() {
-		return this.Left;
+	public PlayerWalkLeft getWalkLeft() {
+		return this.walkLeft;
 	}
-	public void setWalkLeft(PlayerLeft wLeft) {
-		this.Left = Left;
+	public void setWalkLeft(PlayerWalkLeft walkLeft) {
+		this.walkLeft = walkLeft;
 	}
 	public PlayerJumpLeft getJumpLeft() {
 		return jumpLeft;
@@ -185,6 +191,42 @@ public class Player
 	public void setPixelsThroughFloor(float pixelsThroughFloor) {
 		this.pixelsThroughFloor = pixelsThroughFloor;
 	}
+	public PlayerFallOfFloorLeft getFallOfFloorLeft() {
+		return fallOfFloorLeft;
+	}
+	public void setFallOfFloorLeft(PlayerFallOfFloorLeft fallOfFloorLeft) {
+		this.fallOfFloorLeft = fallOfFloorLeft;
+	}
+	public PlayerFallOfFloorRight getFallOfFloorRight() {
+		return fallOfFloorRight;
+	}
+	public void setFallOfFloorRight(PlayerFallOfFloorRight fallOfFloorRight) {
+		this.fallOfFloorRight = fallOfFloorRight;
+	}
+	public float getPixelsInWallLeft() {
+		return pixelsInWallLeft;
+	}
+	public void setPixelsInWallLeft(float pixelsInWallLeft) {
+		this.pixelsInWallLeft = pixelsInWallLeft;
+	}
+	public PlayerIdleLeftNoLineairMovement getIdleLeftNoLineairMovement() {
+		return idleLeftNoLineairMovement;
+	}
+	public void setIdleLeftNoLineairMovement(PlayerIdleLeftNoLineairMovement idleLeftNoLineairMovement) {
+		this.idleLeftNoLineairMovement = idleLeftNoLineairMovement;
+	}
+	public float getPixelsInWallRight() {
+		return pixelsInWallRight;
+	}
+	public void setPixelsInWallRight(float pixelsInWallRight) {
+		this.pixelsInWallRight = pixelsInWallRight;
+	}
+	public PlayerIdleRightNoLineairMovement getIdleRightNoLineairMovement() {
+		return idleRightNoLineairMovement;
+	}
+	public void setIdleRightNoLineairMovement(PlayerIdleRightNoLineairMovement idleRightNoLineairMovement) {
+		this.idleRightNoLineairMovement = idleRightNoLineairMovement;
+	}
 	//Constructor
 	public Player(KingsValley1 game, Vector2 position, float speed)
 	{
@@ -193,10 +235,10 @@ public class Player
 		this.collisionRectStairs = new Rectangle(this.position.x, this.position.y + 16, 20, 17);
 		this.speed = speed;	
 		this.texture = new Texture("data/explorer.png");	
-		this.Right = new PlayerRight(this);
+		this.walkRight = new PlayerWalkRight(this);
 		this.idleRight = new PlayerIdleRight(this);
 		this.idleLeft = new PlayerIdleLeft(this);
-		this.Left = new PlayerLeft(this);
+		this.walkLeft = new PlayerWalkLeft(this);
 		this.jumpRight = new PlayerJumpRight(this, 20, 32);
 		this.jumpLeft = new PlayerJumpLeft(this, -20, 32);
 		this.idleJumpLeft = new PlayerIdleJumpLeft(this, -20, 32);
@@ -209,6 +251,11 @@ public class Player
 		this.idleUpStairsLeft = new PlayerIdleUpStairsLeft(this);
 		this.walkDownStairsLeft = new PlayerWalkDownStairsLeft(this);
 		this.idleDownStairsLeft = new PlayerIdleDownStairsLeft(this);
+		this.fallOfFloorLeft = new PlayerFallOfFloorLeft(this, -1, 1);
+		this.fallOfFloorRight = new PlayerFallOfFloorRight(this, 2, 2);
+		this.idleLeftNoLineairMovement = new PlayerIdleLeftNoLineairMovement(this);
+		this.idleRightNoLineairMovement = new PlayerIdleRightNoLineairMovement(this);
+		this.idleRight.Initialize();
 		this.state = this.idleRight;
 	}
 
@@ -223,13 +270,13 @@ public class Player
 	//Draw
 	public void Draw(float delta)
 	{
-		/*
+
 		this.game.getBatch().setColor(1f, 0f, 0f, 1f);
 		this.game.getBatch().draw(Level.getCollisionTexture(),
 								  this.collisionRectStairs.x, 
 								  this.collisionRectStairs.y,
 								  this.collisionRectStairs.getWidth(),
-								  this.collisionRectStairs.getHeight());*/
+								  this.collisionRectStairs.getHeight());
 		this.game.getBatch().setColor(1f,1f, 1f, 1f);
 		this.state.Draw(delta);		
 	}

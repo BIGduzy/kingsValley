@@ -1,6 +1,6 @@
 package Player;
 
-import AnimatedSprite.AnimatedSprite;
+import animatedSprite.AnimatedSprite;
 
 public class PlayerWalkDownStairsRight extends AnimatedSprite{
 	
@@ -26,7 +26,7 @@ public class PlayerWalkDownStairsRight extends AnimatedSprite{
 				this.player.getSpeed()));
 		if (PlayerManager.CollisionDetectionBottomStairsRight())
 		{
-			this.player.setState(this.player.getLeft());
+			this.player.setState(this.player.getWalkLeft());
 		}
 		super.Update(delta);
 	}

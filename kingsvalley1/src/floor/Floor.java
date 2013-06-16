@@ -33,11 +33,11 @@ public class Floor
 
 	public void Draw(float delta)
 	{
-		this.game.getBatch().draw(Level.getCollisionTexture(),
+		/*this.game.getBatch().draw(Level.getCollisionTexture(),
 								  this.collisionRectangle.x,
 								  this.collisionRectangle.y,
 								  this.collisionRectangle.getWidth(),
-								  this.collisionRectangle.getHeight());
+								  this.collisionRectangle.getHeight());*/
 	}
 
 }

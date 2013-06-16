@@ -1,9 +1,10 @@
 package Player;
 
+import animatedSprite.AnimatedSprite;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 
-import AnimatedSprite.AnimatedSprite;
 
 
 

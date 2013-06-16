@@ -42,7 +42,7 @@ public class PlayerManager
 		{
 			if (player.getCollisionRectStairs().overlaps(stairs.getCollisionRectBottom()))
 			{
-				if (player.getState().equals(player.getRight()))
+				if (player.getState().equals(player.getWalkRight()))
 				{
 					int offset = 10;
 					if ((player.getCollisionRectStairs().x 
@@ -81,7 +81,7 @@ public class PlayerManager
 		{
 			if (player.getCollisionRectStairs().overlaps(stairs.getCollisionRectBottom()))
 			{
-				if (player.getState().equals(player.getLeft()))
+				if (player.getState().equals(player.getWalkLeft()))
 				{
 					int offset = 10;
 					if ((player.getCollisionRectStairs().x) >
@@ -135,7 +135,7 @@ public class PlayerManager
 						return true;
 					}
 				}
-				else if (player.getState().equals(player.getLeft()) )
+				else if (player.getState().equals(player.getWalkLeft()) )
 				{
 					int offset = 8;
 					if (player.getCollisionRectStairs().x > 
@@ -170,7 +170,7 @@ public class PlayerManager
 						return true;
 					}
 				}
-				else if (player.getState().equals(player.getRight()) )
+				else if (player.getState().equals(player.getWalkRight()) )
 				{
 					int offset = 8;
 					if ((player.getCollisionRectStairs().x +
@@ -190,10 +190,14 @@ public class PlayerManager
 
 	public static boolean CollisionDectectionGroundAfterJump()
 	{
-		//Check voor ieder floor
+		//Check voor ieder floor.....
 		for (Floor floor : floors)
 		{
-			if (player.getCollisionRectStairs().overlaps(floor.getCollisionRectangle()))
+			//Of de rectangle van de player de rectangle van de floor raakt.....
+			if (player.getCollisionRectStairs().overlaps(floor.getCollisionRectangle()) &&
+					/* en stel als eis dat de bovenkant van de playerrectangle boven
+					 * de bovenkant van de floorrectangle zit */
+					player.getCollisionRectStairs().y < floor.getCollisionRectangle().y)
 			{
 				float pixelsThroughFloor = floor.getCollisionRectangle().y -
 												(player.getCollisionRectStairs().y 
@@ -205,4 +209,99 @@ public class PlayerManager
 		return false;
 	}
 
+	public static boolean CollisionDetectFallOfFloorLeft()
+	{
+		//Kijk voor alle vloeren of ......
+		for (Floor floor : floors)
+		{
+			// de vloerrectangle overlaps met de floor rectangle....
+			if (player.getCollisionRectStairs().overlaps(floor.getCollisionRectangle()))
+			{
+				if (player.getCollisionRectStairs().x + 8 < floor.getCollisionRectangle().x)
+				{
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	public static boolean CollisionDetectFallOfFloorRight()
+	{
+		//Kijk voor alle vloeren of ......
+		for (Floor floor : floors)
+		{
+			// de vloerrectangle overlaps met de floor rectangle....
+			if (player.getCollisionRectStairs().overlaps(floor.getCollisionRectangle()))
+			{
+				if ((player.getCollisionRectStairs().x + 
+						player.getCollisionRectStairs().getWidth() - 8f) > 
+							floor.getCollisionRectangle().x + 
+								floor.getCollisionRectangle().getWidth())
+				{
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
+	public static boolean CollisionDetectionWallInFrontLeft()
+	{
+		for (Floor floor : floors)
+		{
+			if (player.getCollisionRectStairs().overlaps(floor.getCollisionRectangle()))
+			{
+				if (player.getCollisionRectStairs().x <
+						floor.getCollisionRectangle().x + 
+							floor.getCollisionRectangle().getWidth())
+				{
+					if (player.getCollisionRectStairs().x > floor.getCollisionRectangle().x )							
+					{
+						if ((player.getPosition().y + 2 * player.getCollisionRectStairs().getHeight()) >
+								(floor.getCollisionRectangle().y + floor.getCollisionRectangle().getHeight()))
+						{
+							float inWall = floor.getCollisionRectangle().x +
+												floor.getCollisionRectangle().getWidth() - 
+													player.getCollisionRectStairs().x;
+							player.setPixelsInWallLeft(inWall);
+							return true;
+						}
+
+					}
+				}
+			}			
+		}		
+		return false;
+	}
+
+	public static boolean CollisionDetectionWallInFrontRight()
+	{
+		for (Floor floor : floors)
+		{
+			if (player.getCollisionRectStairs().overlaps(floor.getCollisionRectangle()))
+			{
+				if (player.getCollisionRectStairs().x + 
+						player.getCollisionRectStairs().getWidth() >
+							floor.getCollisionRectangle().x )
+				{
+					if ((player.getCollisionRectStairs().x +
+							player.getCollisionRectStairs().getWidth()) <
+								(floor.getCollisionRectangle().x + floor.getCollisionRectangle().getWidth()))							
+					{
+						if ((player.getPosition().y + 2 * player.getCollisionRectStairs().getHeight()) >
+								(floor.getCollisionRectangle().y + floor.getCollisionRectangle().getHeight()))
+						{
+							float inWall = floor.getCollisionRectangle().x - (player.getCollisionRectStairs().x + 
+													player.getCollisionRectStairs().getWidth());
+							player.setPixelsInWallRight(inWall);
+							return true;
+						}
+
+					}
+				}
+			}			
+		}		
+		return false;
+	}
 }

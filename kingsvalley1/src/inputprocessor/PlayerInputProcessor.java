@@ -29,62 +29,64 @@ public class PlayerInputProcessor implements InputProcessor
 		switch(keycode)
 		{
 			case Keys.RIGHT:
-				if (this.player.getState().equals(this.player.getIdleRight())||
-					this.player.getState().equals(this.player.getIdleLeft()) ||
-					this.player.getState().equals(this.player.getLeft()) )
+				if (this.player.getState() == this.player.getIdleRight()||
+					this.player.getState() == this.player.getIdleLeft() ||
+					this.player.getState() == this.player.getWalkLeft()) 
 				{
-					this.player.setState(this.player.getRight());
+					this.player.setState(this.player.getWalkRight());
 				}
-				else if ( this.player.getState().equals(this.player.getIdleUpStairsRight()) ||
-						  this.player.getState().equals(this.player.getIdleDownStairsRight()))
+				else if ( this.player.getState() == this.player.getIdleUpStairsRight() ||
+						  this.player.getState() == this.player.getIdleDownStairsRight())
 				{
 					this.player.getWalkUpStairsRight().Initialize();
 					this.player.setState(this.player.getWalkUpStairsRight());
 				}
-				else if (this.player.getState().equals(this.player.getIdleUpStairsLeft()) ||
-						 this.player.getState().equals(this.player.getIdleDownStairsLeft()))
+				else if (this.player.getState() == this.player.getIdleUpStairsLeft() ||
+						 this.player.getState() == this.player.getIdleDownStairsLeft())
 				{
 					this.player.getWalkDownStairsLeft().Initialize();
 					this.player.setState(this.player.getWalkDownStairsLeft());
 				}
 				break;	
 			case Keys.LEFT:
-				if (this.player.getState().equals(this.player.getIdleLeft()) ||
-					this.player.getState().equals(this.player.getIdleRight())||
-					this.player.getState().equals(this.player.getRight()))
+				if (this.player.getState() == this.player.getIdleLeft() ||
+					this.player.getState() == this.player.getIdleRight()||
+					this.player.getState() == this.player.getWalkRight())
 				{
-					this.player.setState(this.player.getLeft());
+					this.player.setState(this.player.getWalkLeft());
 				}
-				else if (this.player.getState().equals(this.player.getIdleUpStairsRight()) ||
-						 this.player.getState().equals(this.player.getIdleDownStairsRight()))
+				else if (this.player.getState() == this.player.getIdleUpStairsRight() ||
+						 this.player.getState() == this.player.getIdleDownStairsRight())
 				{
 					this.player.getWalkDownStairsRight().Initialize();
 					this.player.setState(this.player.getWalkDownStairsRight());
 				}
-				else if (this.player.getState().equals(this.player.getIdleDownStairsLeft()) ||
-						this.player.getState().equals(this.player.getIdleUpStairsLeft()))
+				else if (this.player.getState() == this.player.getIdleDownStairsLeft() ||
+						this.player.getState() == this.player.getIdleUpStairsLeft())
 				{
 					this.player.getWalkUpStairsLeft().Initialize();
 					this.player.setState(this.player.getWalkUpStairsLeft());
 				}
 				break;
 			case Keys.SPACE:
-				if (this.player.getState().equals(this.player.getRight()))
+				if (this.player.getState() == this.player.getWalkRight() ||
+					this.player.getState() == this.player.getIdleRightNoLineairMovement())
 				{
 					this.player.getJumpRight().Initialize();
 					this.player.setState(this.player.getJumpRight());
 				}
-				else if (this.player.getState().equals(this.player.getLeft()))
+				else if (this.player.getState() == this.player.getWalkLeft() ||
+						 this.player.getState() == this.player.getIdleLeftNoLineairMovement())
 				{
 					this.player.getJumpLeft().Initialize();
 					this.player.setState(this.player.getJumpLeft());
 				}
-				else if (this.player.getState().equals(this.player.getIdleRight()))
+				else if (this.player.getState() == this.player.getIdleRight())
 				{
 					this.player.getIdleJumpRight().Initialize();
 					this.player.setState(this.player.getIdleJumpRight());
 				}
-				else if (this.player.getState().equals(this.player.getIdleLeft()))
+				else if (this.player.getState() == this.player.getIdleLeft())
 				{
 					this.player.getIdleJumpLeft().Initialize();
 					this.player.setState(this.player.getIdleJumpLeft());
@@ -100,32 +102,40 @@ public class PlayerInputProcessor implements InputProcessor
 		switch(keycode)
 		{
 			case Keys.RIGHT:
-				if (this.player.getState().equals(this.player.getRight()))
+				if (this.player.getState() == this.player.getWalkRight())
 				{
 					this.player.setState(this.player.getIdleRight());
 				}
-				else if (this.player.getState().equals(this.player.getWalkUpStairsRight()))
+				else if (this.player.getState() == this.player.getWalkUpStairsRight())
 				{
 					this.player.setState(this.player.getIdleUpStairsRight());
 				}
-				else if (this.player.getState().equals(this.player.getWalkDownStairsLeft()))
+				else if (this.player.getState() == this.player.getWalkDownStairsLeft())
 				{
 					this.player.getIdleDownStairsLeft().Initialize();
 					this.player.setState(this.player.getIdleDownStairsLeft());
 				}
+				else if (this.player.getState() == this.player.getIdleRightNoLineairMovement())
+				{
+					this.player.setState(this.player.getIdleRight());
+				}
 				break;
 			case Keys.LEFT:
-				if (this.player.getState().equals(this.player.getLeft()))
+				if (this.player.getState() == this.player.getWalkLeft())
 				{
 					this.player.setState(this.player.getIdleLeft());
 				}
-				else if (this.player.getState().equals(this.player.getWalkDownStairsRight()))
+				else if (this.player.getState() == this.player.getWalkDownStairsRight())
 				{
 					this.player.setState(this.player.getIdleDownStairsRight());
 				}
-				else if (this.player.getState().equals(this.player.getWalkUpStairsLeft()))
+				else if (this.player.getState() == this.player.getWalkUpStairsLeft())
 				{
 					this.player.setState(this.player.getIdleUpStairsLeft());
+				}
+				else if (this.player.getState() == this.player.getIdleLeftNoLineairMovement())
+				{
+					this.player.setState(this.player.getIdleLeft());
 				}
 				break;
 		}	

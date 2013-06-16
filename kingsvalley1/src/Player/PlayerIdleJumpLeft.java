@@ -1,6 +1,7 @@
 package Player;
 
-import AnimatedSprite.AnimatedSprite;
+
+import animatedSprite.AnimatedSprite;
 
 import com.badlogic.gdx.math.Vector2;
 

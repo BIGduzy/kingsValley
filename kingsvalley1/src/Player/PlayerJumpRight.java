@@ -1,9 +1,10 @@
 package Player;
 
+import animatedSprite.AnimatedSprite;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 
-import AnimatedSprite.AnimatedSprite;
 
 public class PlayerJumpRight extends AnimatedSprite
 {
@@ -30,6 +31,7 @@ public class PlayerJumpRight extends AnimatedSprite
 		this.h = (int)this.startX + this.startH;
 		this.k = (int)this.startY - this.startK;
 		this.a = (this.startY - this.k)/ (float)Math.pow((double)(this.startX - h), 2);
+		this.player.getCollisionRectStairs().setWidth(4f);
 	}
 
 	//Update method
@@ -39,11 +41,18 @@ public class PlayerJumpRight extends AnimatedSprite
 		float y = (float)(this.a * Math.pow((double)(x - this.h), 2) + this.k);
 
 		this.player.setPosition(new Vector2(x, y));
-		//Gdx.app.log("yrichting:", Float.toString(this.player.getPosition().y));
-		if ( this.player.getPosition().y > this.startY)
+
+		/* Breng de collisionrectangle naar de het midden bij de voeten van 
+		 * de player. */
+		this.player.getCollisionRectStairs().setX(this.player.getCollisionRectStairs().x + 8);
+
+		if (PlayerManager.CollisionDectectionGroundAfterJump())
 		{
-			this.player.setPosition(new Vector2(x, this.startY));
-			this.player.setState(this.player.getRight());
+			this.player.setPosition(new Vector2(this.player.getPosition().x,         
+												  this.player.getPosition().y +
+												  	this.player.getPixelsThroughFloor()));
+			this.player.getIdleRight().Initialize();
+			this.player.setState(this.player.getIdleRight());
 		}
 	}
 

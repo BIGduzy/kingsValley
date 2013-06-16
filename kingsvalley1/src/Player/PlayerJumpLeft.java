@@ -1,6 +1,7 @@
 package Player;
 
-import AnimatedSprite.AnimatedSprite;
+
+import animatedSprite.AnimatedSprite;
 
 import com.badlogic.gdx.math.Vector2;
 
@@ -30,6 +31,10 @@ public class PlayerJumpLeft extends AnimatedSprite
 		this.h = (int)this.startX + this.startH;
 		this.k = (int)this.startY - this.startK;
 		this.a = (this.startY - this.k)/ (float)Math.pow((double)(this.startX - h), 2);
+
+		/* Maak de collisionrectangle dunner zodat de player net met zijn hakken
+		 * op de rand kan staan */
+		this.player.getCollisionRectStairs().setWidth(4f);
 	}
 
 	//Update method
@@ -39,20 +44,16 @@ public class PlayerJumpLeft extends AnimatedSprite
 		float y = this.a * (float)Math.pow((double)(x - this.h), 2) + this.k;
 
 		this.player.setPosition(new Vector2(x, y));
+		this.player.getCollisionRectStairs().setX(this.player.getCollisionRectStairs().x + 8f);
 
 		if (PlayerManager.CollisionDectectionGroundAfterJump())
 		{
 			this.player.getPosition().set(this.player.getPosition().x,
 											this.player.getPosition().y + 
 												this.player.getPixelsThroughFloor());
+			this.player.getIdleLeft().Inititialize();
 			this.player.setState(this.player.getIdleLeft());
 		}
-		/*
-		if ( this.player.getPosition().y > this.startY)
-		{
-			this.player.setPosition(new Vector2(x, this.startY));
-			this.player.setState(this.player.getWalkLeft());
-		}*/
 	}
 
 	//Draw method

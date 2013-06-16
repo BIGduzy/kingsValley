@@ -1,30 +1,37 @@
 package Player;
 
-import AnimatedSprite.AnimatedSprite;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 
-public class PlayerIdleRight  extends AnimatedSprite{
-	
-	//fields
-	
-	
-	//constructor
+import animatedSprite.AnimatedSprite;
+
+public class PlayerIdleRight extends AnimatedSprite
+{
+	//Field	
+
+	//Constructor
 	public PlayerIdleRight(Player player)
 	{
 		super(player);
 		this.i = 7;
-		
 	}
-	
-	//update
+
+	public void Initialize()
+	{
+		this.player.getCollisionRectStairs().setWidth(20f);		
+	}
+
+	//Update
 	public void Update(float delta)
 	{
-		
+		if (Gdx.input.isKeyPressed(Keys.RIGHT))
+		{
+			this.player.setState(this.player.getWalkRight());
+		}
 	}
-	
-	
-	//draw
-	public void Deaw(float delta)
+
+	public void Draw(float delta)
 	{
-		super.Draw(delta);
+		super.Draw(delta);		
 	}
 }

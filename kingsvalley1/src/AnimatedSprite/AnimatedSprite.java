@@ -1,4 +1,4 @@
-package AnimatedSprite;
+package animatedSprite;
 
 import Player.Player;
 
