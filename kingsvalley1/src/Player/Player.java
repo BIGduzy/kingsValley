@@ -3,6 +3,8 @@ package Player;
 import level.Level;
 import animatedSprite.AnimatedSprite;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -39,6 +41,7 @@ public class Player
 	private PlayerIdleRightNoLineairMovement idleRightNoLineairMovement;
 	private float pixelsThroughFloor;
 	private float pixelsInWallLeft, pixelsInWallRight;
+	private Sound pickUpJewelSound;
 
 	//Properties
 	public Vector2 getPosition()
@@ -255,6 +258,10 @@ public class Player
 		this.fallOfFloorRight = new PlayerFallOfFloorRight(this, 2, 2);
 		this.idleLeftNoLineairMovement = new PlayerIdleLeftNoLineairMovement(this);
 		this.idleRightNoLineairMovement = new PlayerIdleRightNoLineairMovement(this);
+		//sounds
+		this.pickUpJewelSound = Gdx.audio.newSound(Gdx.files.internal("data/Sounds/pickUpJewel.mp3"));
+		//------
+		
 		this.idleRight.Initialize();
 		this.state = this.idleRight;
 	}
@@ -264,6 +271,10 @@ public class Player
 	public void Update(float delta)
 	{
 		this.state.Update(delta);
+		if (PlayerManager.CollisionDetectionPlayerJewels())
+		{
+			this.pickUpJewelSound.play(1f);
+		}
 	}
 
 

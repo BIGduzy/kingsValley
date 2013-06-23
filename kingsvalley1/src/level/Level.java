@@ -14,6 +14,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+import jewel.Jewel;
+
 import stairsLeft.StairsLeft;
 import stairsRight.StairsRight;
 
@@ -23,7 +25,9 @@ import bricks.Brick;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.input.GestureDetector;
@@ -48,7 +52,9 @@ public class Level
 	private ArrayList<StairsRight> stairsRight;
 	private ArrayList<StairsLeft> stairsLeft;
 	private ArrayList<Floor> floors;
+	private ArrayList<Jewel> jewels;
 	private static TextureRegion collisionTexture;
+	private Music masterMelody;
 
 	//Properties
 	public Player getPlayer() {
@@ -66,7 +72,8 @@ public class Level
 	public Level(KingsValley1 game, int levelIndex)
 	{
 		this.game = game;
-
+		this.jewels = new ArrayList<Jewel>();
+		
 		this.levelPath = "data/" + levelIndex + ".txt";
 		try {
 			this.LoadAssets();
@@ -81,12 +88,14 @@ public class Level
 		this.stairsLeft = new ArrayList<StairsLeft>();
 
 		this.floors = new ArrayList<Floor>();
+		
 
 		this.DetectStairsRight();
 		this.DetectStairsLeft();
 		this.DetectFloors();
 
 
+		PlayerManager.setJewels(this.jewels);
 		PlayerManager.setPlayer(this.player);
 		PlayerManager.setStairsRight(this.stairsRight);
 		PlayerManager.setStairsLeft(this.stairsLeft);
@@ -110,6 +119,11 @@ public class Level
 		//Voeg de multiplexer toe aan setInputProcessor
 		Gdx.input.setInputProcessor(this.multiplexer);
 
+		
+		this.masterMelody = Gdx.audio.newMusic(Gdx.files.internal("data/Sounds/masterMelody.mp3"));
+		this.masterMelody.play();
+		this.masterMelody.setLooping(true);
+		this.masterMelody.setVolume(0.6f);
 	}
 
 	private void LoadAssets() throws IOException
@@ -129,6 +143,46 @@ public class Level
 		this.region.put("trapTopLeft02", new TextureRegion(this.spriteSheet, 84, 16, 16, 16));
 		collisionTexture = new TextureRegion(this.spriteSheet, 16, 0, 16, 16);
 
+		
+		//textureRegion voor jewel
+		this.region.put("jewel", new TextureRegion(this.spriteSheet, 16, 80, 16, 16));
+		this.region.put("crownPartLeft", new TextureRegion(this.spriteSheet, 112, 80, 16, 16));
+		this.region.put("crownPartMiddle", new TextureRegion(this.spriteSheet, 80, 80, 16, 16));
+		this.region.put("crownPartRight", new TextureRegion(this.spriteSheet, 48, 80, 16, 16));	
+		
+		//characters
+		this.region.put("c", new TextureRegion(this.spriteSheet, 80,  128, 16, 16));
+		this.region.put("K", new TextureRegion(this.spriteSheet, 128, 112, 16, 16));
+		this.region.put("O", new TextureRegion(this.spriteSheet, 32,  128, 16, 16));
+		this.region.put("N", new TextureRegion(this.spriteSheet, 16,  128, 16, 16));	
+		this.region.put("A", new TextureRegion(this.spriteSheet, 16,  112, 16, 16));
+		this.region.put("M", new TextureRegion(this.spriteSheet, 0,   128, 16, 16));
+		this.region.put("I", new TextureRegion(this.spriteSheet, 112, 112, 16, 16));
+		this.region.put("P", new TextureRegion(this.spriteSheet, 48,  128, 16, 16));	
+		this.region.put("Y", new TextureRegion(this.spriteSheet, 112, 128, 16, 16));
+		this.region.put("R", new TextureRegion(this.spriteSheet, 64,  128, 16, 16));
+		this.region.put("_", new TextureRegion(this.spriteSheet, 64,  112, 16, 16));
+		this.region.put("D", new TextureRegion(this.spriteSheet, 48,  112, 16, 16));	
+		this.region.put("o", new TextureRegion(this.spriteSheet, 16,  96,  16, 16));
+		this.region.put("C", new TextureRegion(this.spriteSheet, 32,  112, 16, 16));
+		this.region.put("S", new TextureRegion(this.spriteSheet, 96,  128, 16, 16));
+		this.region.put("E", new TextureRegion(this.spriteSheet, 80,  112, 16, 16));	
+		this.region.put("T", new TextureRegion(this.spriteSheet, 112, 128, 16, 16));
+		this.region.put("H", new TextureRegion(this.spriteSheet, 96,  112, 16, 16));
+		
+		//numbers
+		this.region.put("0", new TextureRegion(this.spriteSheet, 0,   96, 16, 16));
+		this.region.put("1", new TextureRegion(this.spriteSheet, 16,  96, 16, 16));	
+		this.region.put("2", new TextureRegion(this.spriteSheet, 32,  96, 16, 16));
+		this.region.put("3", new TextureRegion(this.spriteSheet, 48,  96, 16, 16));
+		this.region.put("4", new TextureRegion(this.spriteSheet, 64,  96, 16, 16));
+		this.region.put("5", new TextureRegion(this.spriteSheet, 80,  96, 16, 16));	
+		this.region.put("6", new TextureRegion(this.spriteSheet, 96,  96, 16, 16));
+		this.region.put("7", new TextureRegion(this.spriteSheet, 112, 96, 16, 16));
+		this.region.put("8", new TextureRegion(this.spriteSheet, 128, 96, 16, 16));
+		this.region.put("9", new TextureRegion(this.spriteSheet, 0,   112, 16, 16));
+		
+		
 		//Alle stenen omdraaien
 		for (Map.Entry<String, TextureRegion> e : this.region.entrySet())
 		{
@@ -184,6 +238,24 @@ public class Level
 				return new Brick(this.game, new Vector2(i,j), this.region.get("traptopright01"), 's');
 			case 'x':
 				return new Brick(this.game, new Vector2(i,j), this.region.get("traptopleft01"), 'x');
+			case 'g':
+				this.jewels.add(new Jewel(this.game, new Vector2(i,j),
+									new Color(0.125f, 0.847f, 0.125f, 1f), this.region));
+				return new Brick(this.game, new Vector2(i,j), this.region.get("brick_transparent"), 'g');
+			case 'b':
+				this.jewels.add(new Jewel(this.game, new Vector2(i,j),
+									new Color(0.125f, 0.125f, 0.968f, 1f), this.region));
+				return new Brick(this.game, new Vector2(i,j), this.region.get("brick_transparent"), 'b');
+			case 'r':
+				this.jewels.add(new Jewel(this.game, new Vector2(i,j),
+									new Color(0.847f, 0.282f, 0.690f, 1f), this.region));
+				return new Brick(this.game, new Vector2(i,j), this.region.get("brick_transparent"), 'r');
+			case 't':
+				this.jewels.add(new Jewel(this.game, new Vector2(i,j),
+									new Color(0.243f, 0.847f, 0.969f, 1f), this.region));
+				
+			//Characters
+				return new Brick(this.game, new Vector2(i,j), this.region.get("brick_transparent"), 't');
 			default:
 				return new Brick(this.game, new Vector2(i,j), this.region.get("brick_transparent"), '.');
 
@@ -287,6 +359,10 @@ public class Level
 	public void Update(float delta)
 	{
 		this.player.Update(delta);
+		for (Jewel jewel : this.jewels)
+		{
+			jewel.Update(delta);
+		}
 	}
 
 
@@ -300,6 +376,10 @@ public class Level
 			}				
 		}
 
+		for (Jewel jewel : this.jewels)
+		{
+			jewel.Draw(delta);
+		}
 		for (StairsRight stairsRight : this.stairsRight)
 		{
 			stairsRight.Draw(delta);

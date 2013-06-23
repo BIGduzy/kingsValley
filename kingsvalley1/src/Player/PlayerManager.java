@@ -2,6 +2,8 @@ package Player;
 
 import java.util.ArrayList;
 
+import jewel.Jewel;
+
 import floor.Floor;
 
 import stairsLeft.StairsLeft;
@@ -13,6 +15,7 @@ public class PlayerManager
 	private static ArrayList<StairsRight> stairsRight;
 	private static ArrayList<StairsLeft> stairsLeft;
 	private static ArrayList<Floor> floors;
+	private static ArrayList<Jewel> jewels;
 
 	public static void setPlayer(Player player) 
 	{
@@ -35,6 +38,11 @@ public class PlayerManager
 	public static void setFloors(ArrayList<Floor> floors) {
 		PlayerManager.floors = floors;
 	}	
+	
+	public static void setJewels(ArrayList<Jewel> jewels)
+	{
+		PlayerManager.jewels  = jewels;
+	}
 
 	public static boolean CollisionDetectionBottomStairsRight()
 	{
@@ -302,6 +310,19 @@ public class PlayerManager
 				}
 			}			
 		}		
+		return false;
+	}
+	
+	public static boolean CollisionDetectionPlayerJewels()
+	{
+		for (Jewel jewel : jewels)
+		{
+			if (jewel.getCollisionRectangle().overlaps(player.getCollisionRectStairs()))
+			{
+				jewels.remove(jewel);
+				return true;
+			}
+		}
 		return false;
 	}
 }
