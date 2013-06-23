@@ -55,6 +55,8 @@ public class Level
 	private ArrayList<Jewel> jewels;
 	private static TextureRegion collisionTexture;
 	private Music masterMelody;
+	private ArrayList<Brick> score;
+	private ArrayList<Brick> highScore;
 
 	//Properties
 	public Player getPlayer() {
@@ -68,12 +70,39 @@ public class Level
 		return collisionTexture;
 	}
 
+	public ArrayList<Brick> getScore() {
+		return score;
+	}
+	public void setScore(ArrayList<Brick> score) {
+		this.score = score;
+	}
+	public ArrayList<Brick> getHighScore() {
+		return highScore;
+	}
+	public void setHighScore(ArrayList<Brick> highScore) {
+		this.highScore = highScore;
+	}
+	public KingsValley1 getGame() {
+		return game;
+	}
+	public void setGame(KingsValley1 game) {
+		this.game = game;
+	}
+	public Map<String, TextureRegion> getRegion() {
+		return region;
+	}
+	public void setRegion(Map<String, TextureRegion> region) {
+		this.region = region;
+	}
 	//Constructor
 	public Level(KingsValley1 game, int levelIndex)
 	{
 		this.game = game;
+
 		this.jewels = new ArrayList<Jewel>();
-		
+		this.score = new ArrayList<Brick>();
+		this.highScore = new ArrayList<Brick>();
+
 		this.levelPath = "data/" + levelIndex + ".txt";
 		try {
 			this.LoadAssets();
@@ -88,18 +117,17 @@ public class Level
 		this.stairsLeft = new ArrayList<StairsLeft>();
 
 		this.floors = new ArrayList<Floor>();
-		
 
 		this.DetectStairsRight();
 		this.DetectStairsLeft();
 		this.DetectFloors();
-
 
 		PlayerManager.setJewels(this.jewels);
 		PlayerManager.setPlayer(this.player);
 		PlayerManager.setStairsRight(this.stairsRight);
 		PlayerManager.setStairsLeft(this.stairsLeft);
 		PlayerManager.setFloors(this.floors);
+
 
 		//Inputprocessor zorgt voor alle inputdetectie
 		//-----------------------------------------------------
@@ -119,7 +147,6 @@ public class Level
 		//Voeg de multiplexer toe aan setInputProcessor
 		Gdx.input.setInputProcessor(this.multiplexer);
 
-		
 		this.masterMelody = Gdx.audio.newMusic(Gdx.files.internal("data/Sounds/masterMelody.mp3"));
 		this.masterMelody.play();
 		this.masterMelody.setLooping(true);
@@ -143,46 +170,44 @@ public class Level
 		this.region.put("trapTopLeft02", new TextureRegion(this.spriteSheet, 84, 16, 16, 16));
 		collisionTexture = new TextureRegion(this.spriteSheet, 16, 0, 16, 16);
 
-		
-		//textureRegion voor jewel
+		// TextureRegion voor de Jewel
 		this.region.put("jewel", new TextureRegion(this.spriteSheet, 16, 80, 16, 16));
 		this.region.put("crownPartLeft", new TextureRegion(this.spriteSheet, 112, 80, 16, 16));
 		this.region.put("crownPartMiddle", new TextureRegion(this.spriteSheet, 80, 80, 16, 16));
-		this.region.put("crownPartRight", new TextureRegion(this.spriteSheet, 48, 80, 16, 16));	
-		
-		//characters
-		this.region.put("c", new TextureRegion(this.spriteSheet, 80,  128, 16, 16));
+		this.region.put("crownPartRight", new TextureRegion(this.spriteSheet, 48, 80, 16, 16));
+
+		//Characters
+		this.region.put("c", new TextureRegion(this.spriteSheet, 80, 128, 16, 16));
 		this.region.put("K", new TextureRegion(this.spriteSheet, 128, 112, 16, 16));
-		this.region.put("O", new TextureRegion(this.spriteSheet, 32,  128, 16, 16));
-		this.region.put("N", new TextureRegion(this.spriteSheet, 16,  128, 16, 16));	
-		this.region.put("A", new TextureRegion(this.spriteSheet, 16,  112, 16, 16));
-		this.region.put("M", new TextureRegion(this.spriteSheet, 0,   128, 16, 16));
+		this.region.put("O", new TextureRegion(this.spriteSheet, 32, 128, 16, 16));
+		this.region.put("N", new TextureRegion(this.spriteSheet, 16, 128, 16, 16));
+		this.region.put("A", new TextureRegion(this.spriteSheet, 16, 112, 16, 16));
+		this.region.put("M", new TextureRegion(this.spriteSheet, 0, 128, 16, 16));
 		this.region.put("I", new TextureRegion(this.spriteSheet, 112, 112, 16, 16));
-		this.region.put("P", new TextureRegion(this.spriteSheet, 48,  128, 16, 16));	
-		this.region.put("Y", new TextureRegion(this.spriteSheet, 112, 128, 16, 16));
-		this.region.put("R", new TextureRegion(this.spriteSheet, 64,  128, 16, 16));
-		this.region.put("_", new TextureRegion(this.spriteSheet, 64,  112, 16, 16));
-		this.region.put("D", new TextureRegion(this.spriteSheet, 48,  112, 16, 16));	
-		this.region.put("o", new TextureRegion(this.spriteSheet, 16,  96,  16, 16));
-		this.region.put("C", new TextureRegion(this.spriteSheet, 32,  112, 16, 16));
-		this.region.put("S", new TextureRegion(this.spriteSheet, 96,  128, 16, 16));
-		this.region.put("E", new TextureRegion(this.spriteSheet, 80,  112, 16, 16));	
+		this.region.put("P", new TextureRegion(this.spriteSheet, 48, 128, 16, 16));
+		this.region.put("Y", new TextureRegion(this.spriteSheet, 128, 128, 16, 16));
+		this.region.put("R", new TextureRegion(this.spriteSheet, 64, 128, 16, 16));
+		this.region.put("-", new TextureRegion(this.spriteSheet, 64, 112, 16, 16));
+		this.region.put("D", new TextureRegion(this.spriteSheet, 48, 112, 16, 16));
+		this.region.put("o", new TextureRegion(this.spriteSheet, 16, 96, 16, 16));
+		this.region.put("C", new TextureRegion(this.spriteSheet, 32, 112, 16, 16));
+		this.region.put("S", new TextureRegion(this.spriteSheet, 96, 128, 16, 16));
+		this.region.put("E", new TextureRegion(this.spriteSheet, 80, 112, 16, 16));
 		this.region.put("T", new TextureRegion(this.spriteSheet, 112, 128, 16, 16));
-		this.region.put("H", new TextureRegion(this.spriteSheet, 96,  112, 16, 16));
-		
-		//numbers
-		this.region.put("0", new TextureRegion(this.spriteSheet, 0,   96, 16, 16));
-		this.region.put("1", new TextureRegion(this.spriteSheet, 16,  96, 16, 16));	
-		this.region.put("2", new TextureRegion(this.spriteSheet, 32,  96, 16, 16));
-		this.region.put("3", new TextureRegion(this.spriteSheet, 48,  96, 16, 16));
-		this.region.put("4", new TextureRegion(this.spriteSheet, 64,  96, 16, 16));
-		this.region.put("5", new TextureRegion(this.spriteSheet, 80,  96, 16, 16));	
-		this.region.put("6", new TextureRegion(this.spriteSheet, 96,  96, 16, 16));
+		this.region.put("H", new TextureRegion(this.spriteSheet, 96, 112, 16, 16));
+
+		//Numbers
+		this.region.put("0", new TextureRegion(this.spriteSheet, 0, 96, 16, 16));
+		this.region.put("1", new TextureRegion(this.spriteSheet, 16, 96, 16, 16));
+		this.region.put("2", new TextureRegion(this.spriteSheet, 32, 96, 16, 16));
+		this.region.put("3", new TextureRegion(this.spriteSheet, 48, 96, 16, 16));
+		this.region.put("4", new TextureRegion(this.spriteSheet, 64, 96, 16, 16));
+		this.region.put("5", new TextureRegion(this.spriteSheet, 80, 96, 16, 16));
+		this.region.put("6", new TextureRegion(this.spriteSheet, 96, 96, 16, 16));
 		this.region.put("7", new TextureRegion(this.spriteSheet, 112, 96, 16, 16));
 		this.region.put("8", new TextureRegion(this.spriteSheet, 128, 96, 16, 16));
-		this.region.put("9", new TextureRegion(this.spriteSheet, 0,   112, 16, 16));
-		
-		
+		this.region.put("9", new TextureRegion(this.spriteSheet, 0, 112, 16, 16));
+
 		//Alle stenen omdraaien
 		for (Map.Entry<String, TextureRegion> e : this.region.entrySet())
 		{
@@ -253,9 +278,71 @@ public class Level
 			case 't':
 				this.jewels.add(new Jewel(this.game, new Vector2(i,j),
 									new Color(0.243f, 0.847f, 0.969f, 1f), this.region));
-				
-			//Characters
 				return new Brick(this.game, new Vector2(i,j), this.region.get("brick_transparent"), 't');
+
+			//Character
+			case 'c':
+				return new Brick(this.game, new Vector2(i,j), this.region.get("c"), 'c');
+			case 'K':
+				return new Brick(this.game, new Vector2(i,j), this.region.get("K"), 'K');
+			case 'O':
+				return new Brick(this.game, new Vector2(i,j), this.region.get("O"), 'O');
+			case 'N':
+				return new Brick(this.game, new Vector2(i,j), this.region.get("N"), 'N');
+			case 'A':
+				return new Brick(this.game, new Vector2(i,j), this.region.get("A"), 'A');
+			case 'M':
+				return new Brick(this.game, new Vector2(i,j), this.region.get("M"), 'M');
+			case 'I':
+				return new Brick(this.game, new Vector2(i,j), this.region.get("I"), 'I');
+			case 'P':
+				return new Brick(this.game, new Vector2(i,j), this.region.get("P"), 'P');
+			case 'Y':
+				return new Brick(this.game, new Vector2(i,j), this.region.get("Y"), 'Y');
+			case 'R':
+				return new Brick(this.game, new Vector2(i,j), this.region.get("R"), 'R');
+			case 'D':
+				return new Brick(this.game, new Vector2(i,j), this.region.get("D"), 'D');
+			case '-':
+				return new Brick(this.game, new Vector2(i,j), this.region.get("-"), '-');
+			case 'o':
+				return new Brick(this.game, new Vector2(i,j), this.region.get("o"), 'o');
+			case 'C':
+				return new Brick(this.game, new Vector2(i,j), this.region.get("C"), 'C');
+			case 'S':
+				return new Brick(this.game, new Vector2(i,j), this.region.get("S"), 'S');
+			case 'E':
+				return new Brick(this.game, new Vector2(i,j), this.region.get("E"), 'E');
+			case 'T':
+				return new Brick(this.game, new Vector2(i,j), this.region.get("T"), 'T');
+			case 'H':
+				return new Brick(this.game, new Vector2(i,j), this.region.get("H"), 'H');
+			case '0':
+				return new Brick(this.game, new Vector2(i,j), this.region.get("0"), '0');
+			case 'y':
+				return new Brick(this.game, new Vector2(i,j), this.region.get("y"), 'y');
+			case 'z':
+				return new Brick(this.game, new Vector2(i,j), this.region.get("z"), 'z');
+			case '4':
+				return new Brick(this.game, new Vector2(i,j), this.region.get("4"), '4');
+			case '5':
+				return new Brick(this.game, new Vector2(i,j), this.region.get("5"), '5');
+			case '6':
+				return new Brick(this.game, new Vector2(i,j), this.region.get("6"), '6');
+			case '7':
+				return new Brick(this.game, new Vector2(i,j), this.region.get("7"), '7');
+			case '8':
+				return new Brick(this.game, new Vector2(i,j), this.region.get("8"), '8');
+			case '9':
+				return new Brick(this.game, new Vector2(i,j), this.region.get("9"), '9');
+			case '/':
+				this.score.add(new Brick(this.game, new Vector2(i,j), this.region.get("0"), '/'));
+				return new Brick(this.game, new Vector2(i,j), this.region.get("brick_transparent"), '/');
+			case '!':
+				this.highScore.add(new Brick(this.game, new Vector2(i,j), this.region.get("0"), '!'));
+				return new Brick(this.game, new Vector2(i,j), this.region.get("brick_transparent"), '!');
+
+
 			default:
 				return new Brick(this.game, new Vector2(i,j), this.region.get("brick_transparent"), '.');
 
@@ -363,6 +450,7 @@ public class Level
 		{
 			jewel.Update(delta);
 		}
+		PlayerManager.setLevel(this);
 	}
 
 
@@ -376,10 +464,16 @@ public class Level
 			}				
 		}
 
-		for (Jewel jewel : this.jewels)
+		for (Brick brick : this.score)
 		{
-			jewel.Draw(delta);
+			brick.Draw(delta);
 		}
+
+		for (Brick brick : this.highScore)
+		{
+			brick.Draw(delta);
+		}
+
 		for (StairsRight stairsRight : this.stairsRight)
 		{
 			stairsRight.Draw(delta);
@@ -393,6 +487,11 @@ public class Level
 		for (Floor floor : this.floors)
 		{
 			floor.Draw(delta);
+		}
+
+		for (Jewel jewel : this.jewels)
+		{
+			jewel.Draw(delta);
 		}
 
 		this.player.Draw(delta);

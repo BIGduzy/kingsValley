@@ -2,7 +2,10 @@ package Player;
 
 import java.util.ArrayList;
 
+import Score.Score;
+
 import jewel.Jewel;
+import level.Level;
 
 import floor.Floor;
 
@@ -16,6 +19,7 @@ public class PlayerManager
 	private static ArrayList<StairsLeft> stairsLeft;
 	private static ArrayList<Floor> floors;
 	private static ArrayList<Jewel> jewels;
+	private static Level level;
 
 	public static void setPlayer(Player player) 
 	{
@@ -30,6 +34,11 @@ public class PlayerManager
 		PlayerManager.stairsLeft = stairsLeft;
 	}
 
+	public static void setJewels(ArrayList<Jewel> jewels)
+	{
+		PlayerManager.jewels  = jewels;
+	}
+
 
 	public static ArrayList<Floor> getFloors() {
 		return floors;
@@ -38,12 +47,13 @@ public class PlayerManager
 	public static void setFloors(ArrayList<Floor> floors) {
 		PlayerManager.floors = floors;
 	}	
-	
-	public static void setJewels(ArrayList<Jewel> jewels)
-	{
-		PlayerManager.jewels  = jewels;
-	}
 
+	public static Level getLevel() {
+		return level;
+	}
+	public static void setLevel(Level level) {
+		PlayerManager.level = level;
+	}
 	public static boolean CollisionDetectionBottomStairsRight()
 	{
 		for (StairsRight stairs : stairsRight)
@@ -312,7 +322,7 @@ public class PlayerManager
 		}		
 		return false;
 	}
-	
+
 	public static boolean CollisionDetectionPlayerJewels()
 	{
 		for (Jewel jewel : jewels)
@@ -320,6 +330,10 @@ public class PlayerManager
 			if (jewel.getCollisionRectangle().overlaps(player.getCollisionRectStairs()))
 			{
 				jewels.remove(jewel);
+				Score.setGameScore(Score.getGameScore() + 500);
+				Score.setHighScore(Score.getHighScore() + 500);
+				Score.AdjustScore(level);
+				Score.AdjustHighScore(level);
 				return true;
 			}
 		}

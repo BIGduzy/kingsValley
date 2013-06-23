@@ -33,8 +33,8 @@ public class Image
 								  this.position.y,
 								  0f,
 								  0f,
-								  16f,
-								  16f,
+								  this.region.getRegionWidth(),
+								  this.region.getRegionHeight(),
 								  1f,
 								  1f,
 								  0f);
